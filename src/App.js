@@ -1,12 +1,12 @@
 import React from 'react';
 import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom';
-import Login from './Components/Login';
-import SignUp from './Components/SignUp'; 
-import Dashboard from './Components/Dashboard';
-import Appointments from './Components/Appointment';
-import Patient from './Components/Patient';
-import Message from './Components/Message';
-import Report from './Components/Report';
+import Login from './Pages/Login';
+import SignUp from './Pages/SignUp'; 
+import Dashboard from './Pages/Dashboard';
+import Appointments from './Pages/Appointment';
+import Patient from './Pages/Patient';
+import Message from './Pages/Message';
+import Report from './Pages/Report';
 
 
 
