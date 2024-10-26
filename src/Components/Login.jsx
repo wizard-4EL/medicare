@@ -1,54 +1,81 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
-import image from "../img/loginpic2.jpg"; 
+import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import image from '../img/loginpic2.jpg';
 
 function Login() {
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const navigate = useNavigate();
+
+  const handleLogin = (e) => {
+    e.preventDefault();
+    if (email && password) {
+      navigate('/dashboard');
+    } else {
+      alert("Please fill in all fields!");
+    }
+  };
+
   return (
-    <div className="h-screen w-full flex items-center justify-center bg-gray-100">
-      {/* Container for Image and Form */}
-      <div className="flex flex-col sm:flex-row items-center bg-white rounded-lg shadow-lg p-12">
+    <div className="flex justify-center items-center min-h-screen bg-gradient-to-r from-blue-500 to-purple-600">
+      <div className="w-full max-w-4xl bg-white rounded-xl shadow-lg overflow-hidden flex">
         
-        {/* Image */}
-        <div className="w-[300px] h-[300px] flex-shrink-0 mb-4 sm:mb-0 sm:mr-6">
-          <img className="w-full h-full object-cover rounded-md shadow-md" src={image} alt="Login" />
+        {/* Left side with image */}
+        <div className="hidden md:flex w-1/2 bg-cover bg-center" style={{ backgroundImage: `url(${image})` }}>
+          <div className="w-full h-full bg-black bg-opacity-30 flex items-center justify-center">
+         
+          </div>
         </div>
 
-        {/* Login Form */}
-        <div className="max-w-[400px] w-full">
-          <form className="w-full">
-            <h2 className="text-4xl font-bold text-center text-gray-800 mb-6">MEDICARE</h2>
+        {/* Right side with form */}
+        <div className="w-full md:w-1/2 p-8">
+          <h2 className="text-4xl font-extrabold text-center text-blue-600 mb-4">MEDICARE</h2>
+          <p className="text-center text-gray-600 mb-8">Sign in to continue</p>
+          <form onSubmit={handleLogin} className="space-y-6">
             
             {/* Email Input */}
-            <div className="flex flex-col mb-5">
-              <label className="text-gray-700">Email</label>
-              <input 
-                className="border py-2 px-3 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent" 
-                type="text" 
+            <div>
+              <label className="block text-gray-700 font-semibold mb-2">Email</label>
+              <input
+                className="w-full border border-gray-300 px-4 py-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                type="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
                 placeholder="Enter your email"
               />
             </div>
 
             {/* Password Input */}
-            <div className="flex flex-col mb-6">
-              <label className="text-gray-700">Password</label>
-              <input 
-                className="border py-2 px-3 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent" 
-                type="password" 
+            <div>
+              <label className="block text-gray-700 font-semibold mb-2">Password</label>
+              <input
+                className="w-full border border-gray-300 px-4 py-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                type="password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
                 placeholder="Enter your password"
               />
             </div>
 
             {/* Login Button */}
-            <button 
-              className="w-full h-12 rounded-md text-white bg-blue-500 hover:bg-blue-600 transition-colors duration-300"
+            <button
+              type="submit"
+              className="w-full bg-blue-600 text-white py-3 rounded-lg font-semibold hover:bg-blue-700 transition-colors"
             >
               Login
             </button>
 
-            {/* Sign-up Option */}
-            <div className="flex justify-between mt-4 text-sm text-gray-600">
-              <p>Don't have an account?</p>
-              <Link to="/signup" className="text-blue-500 hover:underline">Sign Up</Link>
+            {/* Sign Up Link */}
+            <div className="text-center mt-4">
+              <p className="text-gray-600">
+                Don't have an account?{' '}
+                <span
+                  className="text-blue-500 font-semibold cursor-pointer hover:underline"
+                  onClick={() => navigate('/signup')}
+                >
+                  Sign Up
+                </span>
+              </p>
             </div>
           </form>
         </div>
