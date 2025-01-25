@@ -26,7 +26,7 @@ function Login() {
 
         // Optionally, you can store user information in localStorage
         localStorage.setItem("user", JSON.stringify(user));
-
+console.log("navvv")
         // Redirect to the dashboard
         navigate("/dashboard");
       } catch (err) {
