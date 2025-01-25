@@ -2,9 +2,8 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { createUserWithEmailAndPassword } from 'firebase/auth';
 import { doc, setDoc } from 'firebase/firestore';
-import auth from '../firebase/config'; // Firebase auth instance
-import db from '../firebase/config'; // Firebase Firestore instance
 
+import { db,auth } from '../firebase/config';
 import image from "../img/signUp.jpeg";
 
 function SignUp() {
