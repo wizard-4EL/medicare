@@ -1,11 +1,13 @@
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import axios from 'axios'; // Import axios
-import image from '../img/loginpic2.jpg';
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { signInWithEmailAndPassword } from "firebase/auth"; // Import Firebase login method
+import { auth } from "../firebase/config"; // Import the Firebase Auth instance
+
+import image from "../img/loginpic2.jpg";
 
 function Login() {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const [error, setError] = useState(null); // State for error handling
   const navigate = useNavigate();
 
@@ -15,31 +17,37 @@ function Login() {
 
     if (email && password) {
       try {
-        const response = await axios.post('http://localhost:5000/auth/signin', {
-          email,
-          password,
-        });
+        // Firebase login function
+        const userCredential = await signInWithEmailAndPassword(auth, email, password);
 
-        // Assuming a successful login will return a token or user data
-        // You can store the token in localStorage or manage user state as needed
-        localStorage.setItem('token', response.data.token); // Store token
-        navigate('/dashboard'); // Redirect to dashboard
+        // User successfully logged in
+        const user = userCredential.user;
+        console.log("Logged in user:", user);
+
+        // Optionally, you can store user information in localStorage
+        localStorage.setItem("user", JSON.stringify(user));
+
+        // Redirect to the dashboard
+        navigate("/dashboard");
       } catch (err) {
-        setError(err.response?.data?.msg || "An error occurred"); // Handle error response
+        // Handle Firebase login errors
+        setError(err.message || "Failed to log in. Please try again.");
       }
     } else {
-      alert("Please fill in all fields!");
+      setError("Please fill in all fields!");
     }
   };
 
   return (
     <div className="flex justify-center items-center min-h-screen bg-gradient-to-r from-blue-500 to-purple-600">
       <div className="w-full max-w-4xl bg-white rounded-xl shadow-lg overflow-hidden flex">
-        
         {/* Left side with image */}
-        <div className="hidden md:flex w-1/2 bg-cover bg-center" style={{ backgroundImage: `url(${image})` }}>
+        <div
+          className="hidden md:flex w-1/2 bg-cover bg-center"
+          style={{ backgroundImage: `url(${image})` }}
+        >
           <div className="w-full h-full bg-black bg-opacity-30 flex items-center justify-center">
-            {/* Optional: You can add any content here if needed */}
+            {/* Optional: Add any content here */}
           </div>
         </div>
 
@@ -51,7 +59,6 @@ function Login() {
           {error && <p className="text-red-500 text-center mb-4">{error}</p>} {/* Error message */}
 
           <form onSubmit={handleLogin} className="space-y-6">
-            
             {/* Email Input */}
             <div>
               <label className="block text-gray-700 font-semibold mb-2">Email</label>
@@ -61,7 +68,7 @@ function Login() {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 placeholder="Enter your email"
-                required // Optional: Add required attribute
+                required
               />
             </div>
 
@@ -74,7 +81,7 @@ function Login() {
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 placeholder="Enter your password"
-                required // Optional: Add required attribute
+                required
               />
             </div>
 
@@ -89,10 +96,10 @@ function Login() {
             {/* Sign Up Link */}
             <div className="text-center mt-4">
               <p className="text-gray-600">
-                Don't have an account?{' '}
+                Don't have an account?{" "}
                 <span
                   className="text-blue-500 font-semibold cursor-pointer hover:underline"
-                  onClick={() => navigate('/signup')}
+                  onClick={() => navigate("/signup")}
                 >
                   Sign Up
                 </span>
