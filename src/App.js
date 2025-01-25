@@ -12,9 +12,10 @@ import Report from './Pages/Report';
 
 // Placeholder for Protected Routes
 const PrivateRoute = ({ children }) => {
-  const isAuthenticated = false; // Replace with actual authentication logic
-  return isAuthenticated ? children : <Navigate to="/login" />;
+  const token = localStorage.getItem('user'); // Check for the stored token
+  return token ? children : <Navigate to="/login" />;
 };
+
 
 function App() {
   return (
