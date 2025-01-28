@@ -28,50 +28,52 @@ const financialReports = {
 function Reports() {
   return (
     <div className="flex h-screen bg-gray-100">
-      {/* Sidebar */}
-      <aside className="w-1/5 bg-blue-800 text-white p-6 flex flex-col justify-between">
-        <div>
-          <h2 className="text-3xl font-bold mb-6">MEDICARE</h2>
-          <ul className="space-y-4">
-            <li className="flex items-center space-x-2 p-2 rounded-lg hover:bg-blue-700">
-              <Link to="/dashboard" className="flex items-center space-x-2">
-                <CgDetailsMore />
-                <span>Dashboard</span>
-              </Link>
-            </li>
-            <li className="flex items-center space-x-2 p-2 rounded-lg hover:bg-blue-700">
-              <Link to="/appointments" className="flex items-center space-x-2">
-                <CgTemplate />
-                <span>Appointments</span>
-              </Link>
-            </li>
-            <li className="flex items-center space-x-2 p-2 rounded-lg hover:bg-blue-700">
-              <Link to="/patients" className="flex items-center space-x-2">
-                <CgProfile />
-                <span>Patients</span>
-              </Link>
-            </li>
-            <li className="flex items-center space-x-2 p-2 rounded-lg bg-blue-900">
-              <Link to="/reports" className="flex items-center space-x-2">
-                <CgClipboard className="text-lg" />
-                <span>Reports</span>
-              </Link>
-            </li>
-            <li className="flex items-center space-x-2 p-2 rounded-lg hover:bg-blue-700 cursor-pointer">
-              <CgMail />
-              <span>Messages</span>
-            </li>
-            <li className="flex items-center space-x-2 p-2 rounded-lg hover:bg-blue-700">
-              <RiSettings2Line />
-              <span>Settings</span>
-            </li>
-          </ul>
-        </div>
-        <button className="flex items-center space-x-2 p-2 rounded-lg bg-red-600 hover:bg-red-700">
-          <CgLogIn />
-          <span>Logout</span>
-        </button>
-      </aside>
+          {/* Sidebar */}
+          <aside className="w-1/5 bg-blue-800 text-white p-6 flex flex-col justify-between">
+            <div>
+              <h2 className="text-3xl font-bold mb-6">MEDICARE</h2>
+              <ul className="space-y-4">
+                <li className="flex items-center space-x-2 p-2 rounded-lg bg-blue-900 cursor-pointer">
+                  <CgDetailsMore />
+                  <span>Dashboard</span>
+                </li>
+                <li className="flex items-center space-x-2 p-2 rounded-lg hover:bg-blue-700 cursor-pointer">
+                  <Link to="/appointments" className="flex items-center space-x-2">
+                    <CgTemplate />
+                    <span>Appointments</span>
+                  </Link>
+                </li>
+                <li className="flex items-center space-x-2 p-2 rounded-lg hover:bg-blue-700 cursor-pointer">
+                  <Link to="/patient" className="flex items-center space-x-2">
+                    <CgProfile />
+                    <span>Patients</span>
+                  </Link>
+                </li>
+                <li className="flex items-center space-x-2 p-2 rounded-lg hover:bg-blue-700 cursor-pointer">
+                  <Link to="/report" className="flex items-center space-x-2">
+                    <CgClipboard />
+                    <span>Report</span>
+                  </Link>
+                </li>
+                <li className="flex items-center space-x-2 p-2 rounded-lg hover:bg-blue-700 cursor-pointer">
+                  <Link to="/message" className="flex items-center space-x-2">
+                    <CgMail />
+                    <span>Messages</span>
+                  </Link>
+                </li>
+                <li className="flex items-center space-x-2 p-2 rounded-lg hover:bg-blue-700 cursor-pointer">
+                  <Link to="/settings" className="flex items-center space-x-2">
+                    <RiSettings2Line />
+                    <span>Settings</span>
+                  </Link>
+                </li>
+              </ul>
+            </div>
+            <button className="flex items-center space-x-2 p-2 rounded-lg bg-red-600 hover:bg-red-700">
+              <CgLogIn />
+              <span>Logout</span>
+            </button>
+          </aside>
 
       {/* Main Content */}
       <div className="flex-1 p-6 bg-pink-100">

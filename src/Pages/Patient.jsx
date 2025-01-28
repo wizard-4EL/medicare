@@ -6,66 +6,70 @@ import { Link } from 'react-router-dom';
 
 // Sample patient data
 const patients = [
-  { name: "Robert Fox", date: "23, Oct.", time: "11:00am - 12:00pm", type: "Individual Counseling", image: "https://via.placeholder.com/50" },
-  { name: "Abella Danger", date: "23, Oct.", time: "11:00am - 12:00pm", type: "Individual Counseling", image: "https://via.placeholder.com/50" },
-  { name: "Jude Oc", date: "23, Oct.", time: "11:00am - 12:00pm", type: "Individual Counseling", image: "https://via.placeholder.com/50" },
-  { name: "Robert Fox", date: "23, Oct.", time: "11:00am - 12:00pm", type: "Individual Counseling", image: "https://via.placeholder.com/50" },
-  { name: "Abella Danger", date: "23, Oct.", time: "11:00am - 12:00pm", type: "Individual Counseling", image: "https://via.placeholder.com/50" },
-  { name: "Jude Oc", date: "23, Oct.", time: "11:00am - 12:00pm", type: "Individual Counseling", image: "https://via.placeholder.com/50" },
-  { name: "Robert Fox", date: "23, Oct.", time: "11:00am - 12:00pm", type: "Individual Counseling", image: "https://via.placeholder.com/50" },
-  { name: "Abella Danger", date: "23, Oct.", time: "11:00am - 12:00pm", type: "Individual Counseling", image: "https://via.placeholder.com/50" },
-  { name: "Jude Oc", date: "23, Oct.", time: "11:00am - 12:00pm", type: "Individual Counseling", image: "https://via.placeholder.com/50" },
-  { name: "Robert Fox", date: "23, Oct.", time: "11:00am - 12:00pm", type: "Individual Counseling", image: "https://via.placeholder.com/50" },
-  { name: "Abella Danger", date: "23, Oct.", time: "11:00am - 12:00pm", type: "Individual Counseling", image: "https://via.placeholder.com/50" },
-  { name: "Jude Oc", date: "23, Oct.", time: "11:00am - 12:00pm", type: "Individual Counseling", image: "https://via.placeholder.com/50" },
+  { name: "Robert Fox", date: "23, Oct.", time: "11:00am - 12:00pm", type: "Individual Counseling", image: "/img/bb8a91a047deaa78f7a89228f80d92da.jpg" },
+  { name: "Abella Danger", date: "23, Oct.", time: "11:00am - 12:00pm", type: "Individual Counseling", image: "img/875b4fb82c44a038466807b0dcf884cc.jpg" },
+  { name: "Jude Oc", date: "23, Oct.", time: "11:00am - 12:00pm", type: "Individual Counseling", image: "img/1a96cf1393ff90ea75c15db5d648b03b.jpg" },
+  { name: "Robert Fox", date: "23, Oct.", time: "11:00am - 12:00pm", type: "Individual Counseling", image:"img/875b4fb82c44a038466807b0dcf884cc.jpg" },
+  { name: "Abella Danger", date: "23, Oct.", time: "11:00am - 12:00pm", type: "Individual Counseling", image: "img/1a96cf1393ff90ea75c15db5d648b03b.jpg"},
+  { name: "Jude Oc", date: "23, Oct.", time: "11:00am - 12:00pm", type: "Individual Counseling", image: "/img/bb8a91a047deaa78f7a89228f80d92da.jpg" },
+  { name: "Robert Fox", date: "23, Oct.", time: "11:00am - 12:00pm", type: "Individual Counseling", image: "img/875b4fb82c44a038466807b0dcf884cc.jpg" },
+  { name: "Abella Danger", date: "23, Oct.", time: "11:00am - 12:00pm", type: "Individual Counseling", image:"img/1a96cf1393ff90ea75c15db5d648b03b.jpg" },
+  { name: "Jude Oc", date: "23, Oct.", time: "11:00am - 12:00pm", type: "Individual Counseling", image: "/img/bb8a91a047deaa78f7a89228f80d92da.jpg" },
+  { name: "Robert Fox", date: "23, Oct.", time: "11:00am - 12:00pm", type: "Individual Counseling", image: "img/875b4fb82c44a038466807b0dcf884cc.jpg" },
+  { name: "Abella Danger", date: "23, Oct.", time: "11:00am - 12:00pm", type: "Individual Counseling", image: "img/1a96cf1393ff90ea75c15db5d648b03b.jpg" },
+  { name: "Jude Oc", date: "23, Oct.", time: "11:00am - 12:00pm", type: "Individual Counseling", image: "img/875b4fb82c44a038466807b0dcf884cc.jpg" },
   // More patients...
 ];
 
 function Patients() {
   return (
     <div className="flex h-screen bg-gray-100">
-      {/* Sidebar */}
-      <aside className="w-1/5 bg-blue-800 text-white p-6 flex flex-col justify-between">
-        <div>
-          <h2 className="text-3xl font-bold mb-6">MEDICARE</h2>
-          <ul className="space-y-4">
-            <li className="flex items-center space-x-2 p-2 rounded-lg hover:bg-blue-700">
-              <Link to="/dashboard" className="flex items-center space-x-2">
-                <CgDetailsMore />
-                <span>Dashboard</span>
-              </Link>
-            </li>
-            <li className="flex items-center space-x-2 p-2 rounded-lg hover:bg-blue-700">
-              <Link to="/appointments" className="flex items-center space-x-2">
-                <CgTemplate />
-                <span>Appointments</span>
-              </Link>
-            </li>
-            <li className="flex items-center space-x-2 p-2 rounded-lg bg-blue-900">
-              <Link to="/patients" className="flex items-center space-x-2">
-                <CgProfile />
-                <span>Patients</span>
-              </Link>
-            </li>
-            <li className="flex items-center space-x-2 p-2 rounded-lg hover:bg-blue-700">
-              <CgClipboard className="text-lg" />
-              <span>Reports</span>
-            </li>
-            <li className="flex items-center space-x-2 p-2 rounded-lg hover:bg-blue-700">
-              <CgMail />
-              <span>Messages</span>
-            </li>
-            <li className="flex items-center space-x-2 p-2 rounded-lg hover:bg-blue-700">
-              <RiSettings2Line />
-              <span>Settings</span>
-            </li>
-          </ul>
-        </div>
-        <button className="flex items-center space-x-2 p-2 rounded-lg bg-red-600 hover:bg-red-700">
-          <CgLogIn />
-          <span>Logout</span>
-        </button>
-      </aside>
+          {/* Sidebar */}
+          <aside className="w-1/5 bg-blue-800 text-white p-6 flex flex-col justify-between">
+            <div>
+              <h2 className="text-3xl font-bold mb-6">MEDICARE</h2>
+              <ul className="space-y-4">
+                <li className="flex items-center space-x-2 p-2 rounded-lg bg-blue-900 cursor-pointer">
+                  <CgDetailsMore />
+                  <span>Dashboard</span>
+                </li>
+                <li className="flex items-center space-x-2 p-2 rounded-lg hover:bg-blue-700 cursor-pointer">
+                  <Link to="/appointments" className="flex items-center space-x-2">
+                    <CgTemplate />
+                    <span>Appointments</span>
+                  </Link>
+                </li>
+                <li className="flex items-center space-x-2 p-2 rounded-lg hover:bg-blue-700 cursor-pointer">
+                  <Link to="/patient" className="flex items-center space-x-2">
+                    <CgProfile />
+                    <span>Patients</span>
+                  </Link>
+                </li>
+                <li className="flex items-center space-x-2 p-2 rounded-lg hover:bg-blue-700 cursor-pointer">
+                  <Link to="/report" className="flex items-center space-x-2">
+                    <CgClipboard />
+                    <span>Report</span>
+                  </Link>
+                </li>
+                <li className="flex items-center space-x-2 p-2 rounded-lg hover:bg-blue-700 cursor-pointer">
+                  <Link to="/message" className="flex items-center space-x-2">
+                    <CgMail />
+                    <span>Messages</span>
+                  </Link>
+                </li>
+                <li className="flex items-center space-x-2 p-2 rounded-lg hover:bg-blue-700 cursor-pointer">
+                  <Link to="/settings" className="flex items-center space-x-2">
+                    <RiSettings2Line />
+                    <span>Settings</span>
+                  </Link>
+                </li>
+              </ul>
+            </div>
+            <button className="flex items-center space-x-2 p-2 rounded-lg bg-red-600 hover:bg-red-700">
+              <CgLogIn />
+              <span>Logout</span>
+            </button>
+          </aside>
 
       {/* Main Content */}
       <div className="flex-1 p-6 bg-pink-100">

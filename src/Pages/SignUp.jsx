@@ -4,7 +4,7 @@ import { createUserWithEmailAndPassword } from "firebase/auth";
 import { doc, setDoc } from "firebase/firestore";
 
 import { db, auth } from "../firebase/config";
-import image from "../img/signUp.jpeg";
+import images from "../images/signUp.jpeg";
 
 function SignUp() {
   const [formData, setFormData] = useState({
@@ -67,7 +67,7 @@ function SignUp() {
         <div className="w-full h-72 md:h-full">
           <img
             className="w-full h-full object-cover rounded-lg shadow-md"
-            src={image}
+            src={images}
             alt="Sign Up"
           />
         </div>
