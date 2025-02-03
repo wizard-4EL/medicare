@@ -1,121 +1,254 @@
 import React from 'react';
-import { CgClipboard, CgDetailsMore, CgTemplate, CgProfile, CgLogIn, CgMail } from "react-icons/cg";
+import { 
+  CgClipboard, CgDetailsMore, CgTemplate, CgProfile, CgLogIn, CgMail 
+} from "react-icons/cg";
 import { RiSettings2Line } from "react-icons/ri";
 import { Link } from 'react-router-dom';
-import { BiStats } from 'react-icons/bi';
-import { FaRegFrown, FaRegMoneyBillAlt } from 'react-icons/fa';
-
-// Sample data for reports
-const usageStats = {
-  totalUsers: 1500,
-  totalConsultations: 1200,
-  avgConsultationTime: "30 mins",
-};
-
-const commonIssues = [
-  "Connection issues during consultations",
-  "Billing discrepancies",
-  "Difficulty accessing the platform",
-  "Delayed response times from healthcare providers",
-];
-
-const financialReports = {
-  totalRevenue: "$50,000",
-  totalExpenses: "$30,000",
-  netProfit: "$20,000",
-};
+import { BiStats, BiChart, BiUser } from 'react-icons/bi';
+import { FaRegChartBar, FaUserAlt, FaHeartbeat, FaMoneyBillAlt, FaShieldAlt, FaChartPie } from 'react-icons/fa';
 
 function Reports() {
   return (
-    <div className="flex h-screen bg-gray-100">
-          {/* Sidebar */}
-          <aside className="w-1/5 bg-blue-800 text-white p-6 flex flex-col justify-between">
-            <div>
-              <h2 className="text-3xl font-bold mb-6">MEDICARE</h2>
-              <ul className="space-y-4">
-                <li className="flex items-center space-x-2 p-2 rounded-lg bg-blue-900 cursor-pointer">
-                  <CgDetailsMore />
-                  <span>Dashboard</span>
-                </li>
-                <li className="flex items-center space-x-2 p-2 rounded-lg hover:bg-blue-700 cursor-pointer">
-                  <Link to="/appointments" className="flex items-center space-x-2">
-                    <CgTemplate />
-                    <span>Appointments</span>
-                  </Link>
-                </li>
-                <li className="flex items-center space-x-2 p-2 rounded-lg hover:bg-blue-700 cursor-pointer">
-                  <Link to="/patient" className="flex items-center space-x-2">
-                    <CgProfile />
-                    <span>Patients</span>
-                  </Link>
-                </li>
-                <li className="flex items-center space-x-2 p-2 rounded-lg hover:bg-blue-700 cursor-pointer">
-                  <Link to="/report" className="flex items-center space-x-2">
-                    <CgClipboard />
-                    <span>Report</span>
-                  </Link>
-                </li>
-                <li className="flex items-center space-x-2 p-2 rounded-lg hover:bg-blue-700 cursor-pointer">
-                  <Link to="/message" className="flex items-center space-x-2">
-                    <CgMail />
-                    <span>Messages</span>
-                  </Link>
-                </li>
-                <li className="flex items-center space-x-2 p-2 rounded-lg hover:bg-blue-700 cursor-pointer">
-                  <Link to="/settings" className="flex items-center space-x-2">
-                    <RiSettings2Line />
-                    <span>Settings</span>
-                  </Link>
-                </li>
-              </ul>
-            </div>
-            <button className="flex items-center space-x-2 p-2 rounded-lg bg-red-600 hover:bg-red-700">
-              <CgLogIn />
-              <span>Logout</span>
-            </button>
-          </aside>
+    <div className="flex min-h-screen bg-gray-100">
+      {/* Sidebar */}
+      <aside className="w-1/5 bg-blue-900 text-white p-6 flex flex-col justify-between shadow-lg">
+        <div>
+          <h2 className="text-3xl font-bold mb-8">MEDICARE</h2>
+          <ul className="space-y-4">
+            <li className="p-3 hover:bg-blue-700 rounded transition cursor-pointer">
+              <Link to="/dashboard" className="flex items-center space-x-3">
+                <CgDetailsMore className="text-xl" />
+                <span>Dashboard</span>
+              </Link>
+            </li>
+            <li className="p-3 hover:bg-blue-700 rounded transition cursor-pointer">
+              <Link to="/appointments" className="flex items-center space-x-3">
+                <CgTemplate className="text-xl" />
+                <span>Appointments</span>
+              </Link>
+            </li>
+            <li className="p-3 hover:bg-blue-700 rounded transition cursor-pointer">
+              <Link to="/patients" className="flex items-center space-x-3">
+                <CgProfile className="text-xl" />
+                <span>Patients</span>
+              </Link>
+            </li>
+            <li className="p-3 bg-blue-800 rounded transition cursor-pointer">
+              <Link to="/reports" className="flex items-center space-x-3">
+                <CgClipboard className="text-xl" />
+                <span>Reports</span>
+              </Link>
+            </li>
+            <li className="p-3 hover:bg-blue-700 rounded transition cursor-pointer">
+              <Link to="/message" className="flex items-center space-x-3">
+                <CgMail className="text-xl" />
+                <span>MessageS</span>
+              </Link>
+            </li>
+            <li className="p-3 hover:bg-blue-700 rounded transition cursor-pointer">
+              <Link to="/settings" className="flex items-center space-x-3">
+                <RiSettings2Line className="text-xl" />
+                <span>Settings</span>
+              </Link>
+            </li>
+          </ul>
+        </div>
+        <button className="flex items-center space-x-3 p-3 bg-red-600 hover:bg-red-700 rounded transition">
+          <CgLogIn className="text-xl" />
+          <span>Logout</span>
+        </button>
+      </aside>
 
       {/* Main Content */}
-      <div className="flex-1 p-6 bg-pink-100">
-        <h1 className="text-3xl font-bold mb-6">General Reports</h1>
+      <main className="flex-1 p-8 overflow-auto">
+        <header className="mb-8">
+          <h1 className="text-4xl font-bold text-blue-800">Comprehensive Reports</h1>
+          <p className="text-gray-600 mt-2">
+            Detailed analytics and insights on appointments, patients, consultations, provider performance, financials, and usage.
+          </p>
+        </header>
 
-        {/* Usage Statistics Section */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mb-6">
-          <div className="bg-white p-4 rounded-lg shadow-lg border border-gray-200 flex items-center">
-            <BiStats className="text-blue-500 text-3xl mr-4" />
-            <div>
-              <h2 className="text-2xl font-semibold">Usage Statistics</h2>
-              <p>Total Users: <span className="font-bold">{usageStats.totalUsers}</span></p>
-              <p>Total Consultations: <span className="font-bold">{usageStats.totalConsultations}</span></p>
-              <p>Avg Consultation Time: <span className="font-bold">{usageStats.avgConsultationTime}</span></p>
+        {/* Appointment Statistics */}
+        <section className="mb-8">
+          <h2 className="text-2xl font-semibold text-gray-800 mb-4 flex items-center">
+            <BiStats className="text-blue-600 mr-2" /> Appointment Statistics
+          </h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            <div className="bg-white p-4 rounded-lg shadow border">
+              <p className="text-gray-500">Appointments per Day</p>
+              <h3 className="text-3xl font-bold">120</h3>
+            </div>
+            <div className="bg-white p-4 rounded-lg shadow border">
+              <p className="text-gray-500">Appointments per Week</p>
+              <h3 className="text-3xl font-bold">840</h3>
+            </div>
+            <div className="bg-white p-4 rounded-lg shadow border">
+              <p className="text-gray-500">Appointments per Month</p>
+              <h3 className="text-3xl font-bold">3600</h3>
+            </div>
+            <div className="bg-white p-4 rounded-lg shadow border">
+              <p className="text-gray-500">No-show Rate</p>
+              <h3 className="text-3xl font-bold">8%</h3>
+              <p className="text-sm text-gray-500">Reasons: Traffic, Emergencies</p>
             </div>
           </div>
-        </div>
+          <div className="mt-6 text-gray-500">
+            <p>Average Appointment Duration: <span className="font-bold">30 minutes</span></p>
+            <p>Popular Appointment Times: <span className="font-bold">9 AM - 12 PM</span></p>
+          </div>
+        </section>
 
-        {/* Common Issues Section */}
-        <div className="bg-white p-4 rounded-lg shadow-lg border border-gray-200 mb-6">
-          <h2 className="text-2xl font-semibold mb-4 flex items-center">
-            <FaRegFrown className="text-red-500 mr-2" /> Common Issues
+        {/* Patient Demographics */}
+        <section className="mb-8">
+          <h2 className="text-2xl font-semibold text-gray-800 mb-4 flex items-center">
+            <FaUserAlt className="text-green-600 mr-2" /> Patient Demographics
           </h2>
-          <ul className="list-disc pl-5 space-y-2">
-            {commonIssues.map((issue, index) => (
-              <li key={index} className="text-gray-700">{issue}</li>
-            ))}
-          </ul>
-        </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div className="bg-white p-4 rounded-lg shadow border">
+              <h3 className="font-bold text-lg mb-2">Age Distribution</h3>
+              {/* Chart Placeholder */}
+              <div className="h-40 bg-gray-100 flex items-center justify-center rounded-lg border-dashed border-2 border-gray-300">
+                <span className="text-gray-500">[Bar Chart]</span>
+              </div>
+            </div>
+            <div className="bg-white p-4 rounded-lg shadow border">
+              <h3 className="font-bold text-lg mb-2">Gender Breakdown</h3>
+              {/* Chart Placeholder */}
+              <div className="h-40 bg-gray-100 flex items-center justify-center rounded-lg border-dashed border-2 border-gray-300">
+                <span className="text-gray-500">[Pie Chart]</span>
+              </div>
+            </div>
+            <div className="bg-white p-4 rounded-lg shadow border md:col-span-2">
+              <h3 className="font-bold text-lg mb-2">Geographic Distribution</h3>
+              {/* Heatmap Placeholder */}
+              <div className="h-40 bg-gray-100 flex items-center justify-center rounded-lg border-dashed border-2 border-gray-300">
+                <span className="text-gray-500">[Heatmap]</span>
+              </div>
+            </div>
+          </div>
+        </section>
 
-        {/* Financial Reports Section */}
-        <div className="bg-white p-4 rounded-lg shadow-lg border border-gray-200">
-          <h2 className="text-2xl font-semibold mb-4 flex items-center">
-            <FaRegMoneyBillAlt className="text-green-500 mr-2" /> Financial Reports
+        {/* Consultation Metrics */}
+        <section className="mb-8">
+          <h2 className="text-2xl font-semibold text-gray-800 mb-4 flex items-center">
+            <FaHeartbeat className="text-red-600 mr-2" /> Consultation Metrics
           </h2>
-          <ul className="space-y-2">
-            <li>Total Revenue: <span className="font-bold">{financialReports.totalRevenue}</span></li>
-            <li>Total Expenses: <span className="font-bold">{financialReports.totalExpenses}</span></li>
-            <li>Net Profit: <span className="font-bold">{financialReports.netProfit}</span></li>
-          </ul>
-        </div>
-      </div>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div className="bg-white p-4 rounded-lg shadow border">
+              <p className="text-gray-500">Common Diagnoses</p>
+              <h3 className="font-bold">Flu, Cold, Allergies</h3>
+            </div>
+            <div className="bg-white p-4 rounded-lg shadow border">
+              <p className="text-gray-500">Consultation Types</p>
+              <h3 className="font-bold">Video: 60%, Chat: 30%, Phone: 10%</h3>
+            </div>
+            <div className="bg-white p-4 rounded-lg shadow border">
+              <p className="text-gray-500">Follow-up Rate</p>
+              <h3 className="font-bold">25%</h3>
+              <p className="text-sm text-gray-500">Outcome: Improved/Stable</p>
+            </div>
+          </div>
+        </section>
+
+        {/* Provider Performance */}
+        <section className="mb-8">
+          <h2 className="text-2xl font-semibold text-gray-800 mb-4 flex items-center">
+            <BiChart className="text-purple-600 mr-2" /> Provider Performance
+          </h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div className="bg-white p-4 rounded-lg shadow border">
+              <p className="text-gray-500">Consultations per Provider</p>
+              <h3 className="font-bold">Dr. Smith: 200, Dr. Jones: 180</h3>
+            </div>
+            <div className="bg-white p-4 rounded-lg shadow border">
+              <p className="text-gray-500">Patient Satisfaction</p>
+              <h3 className="font-bold">Avg. Rating: 4.5/5</h3>
+            </div>
+            <div className="bg-white p-4 rounded-lg shadow border">
+              <p className="text-gray-500">Average Response Time</p>
+              <h3 className="font-bold">15 minutes</h3>
+            </div>
+          </div>
+        </section>
+
+        {/* Financial Reports */}
+        <section className="mb-8">
+          <h2 className="text-2xl font-semibold text-gray-800 mb-4 flex items-center">
+            <FaMoneyBillAlt className="text-green-600 mr-2" /> Financial Reports
+          </h2>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div className="bg-white p-4 rounded-lg shadow border">
+              <p className="text-gray-500">Revenue</p>
+              <h3 className="font-bold">$50,000</h3>
+            </div>
+            <div className="bg-white p-4 rounded-lg shadow border">
+              <p className="text-gray-500">Billing Summary</p>
+              <h3 className="font-bold">$45,000</h3>
+            </div>
+            <div className="bg-white p-4 rounded-lg shadow border">
+              <p className="text-gray-500">Insurance Claims</p>
+              <h3 className="font-bold">$5,000</h3>
+            </div>
+          </div>
+        </section>
+
+        {/* Usage Analytics */}
+        <section className="mb-8">
+          <h2 className="text-2xl font-semibold text-gray-800 mb-4 flex items-center">
+            <BiUser className="text-blue-600 mr-2" /> Usage Analytics
+          </h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div className="bg-white p-4 rounded-lg shadow border">
+              <p className="text-gray-500">Login Frequency</p>
+              <h3 className="font-bold">Daily: 800, Monthly: 1500</h3>
+            </div>
+            <div className="bg-white p-4 rounded-lg shadow border">
+              <p className="text-gray-500">Average Session Duration</p>
+              <h3 className="font-bold">15 minutes</h3>
+            </div>
+            <div className="bg-white p-4 rounded-lg shadow border md:col-span-2">
+              <p className="text-gray-500">Drop-off Rates</p>
+              <h3 className="font-bold">20% of sessions end prematurely</h3>
+            </div>
+          </div>
+        </section>
+
+        {/* Compliance and Security */}
+        <section className="mb-8">
+          <h2 className="text-2xl font-semibold text-gray-800 mb-4 flex items-center">
+            <FaShieldAlt className="text-red-600 mr-2" /> Compliance & Security
+          </h2>
+          <div className="bg-white p-4 rounded-lg shadow border">
+            <p className="text-gray-500 mb-4">
+              Data access logs, HIPAA compliance reports, and security audit trails.
+            </p>
+            <div className="h-40 bg-gray-100 flex items-center justify-center rounded-lg border-dashed border-2 border-gray-300">
+              <span className="text-gray-500">[Security Dashboard Placeholder]</span>
+            </div>
+          </div>
+        </section>
+
+        {/* Visualization Tools */}
+        <section className="mb-8">
+          <h2 className="text-2xl font-semibold text-gray-800 mb-4 flex items-center">
+            <FaRegChartBar className="text-purple-600 mr-2" /> Visualization Tools
+          </h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div className="bg-white p-4 rounded-lg shadow border">
+              <h3 className="font-bold mb-2">Appointment Trends</h3>
+              <div className="h-40 bg-gray-100 flex items-center justify-center rounded-lg border-dashed border-2 border-gray-300">
+                <span className="text-gray-500">[Line Chart]</span>
+              </div>
+            </div>
+            <div className="bg-white p-4 rounded-lg shadow border">
+              <h3 className="font-bold mb-2">Patient Geography</h3>
+              <div className="h-40 bg-gray-100 flex items-center justify-center rounded-lg border-dashed border-2 border-gray-300">
+                <span className="text-gray-500">[Heatmap/Geo Chart]</span>
+              </div>
+            </div>
+          </div>
+        </section>
+      </main>
     </div>
   );
 }

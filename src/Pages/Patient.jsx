@@ -7,15 +7,15 @@ import { Link } from 'react-router-dom';
 // Sample patient data
 const patients = [
   { name: "Robert Fox", date: "23, Oct.", time: "11:00am - 12:00pm", type: "Individual Counseling", image: "/img/bb8a91a047deaa78f7a89228f80d92da.jpg" },
-  { name: "Abella Danger", date: "23, Oct.", time: "11:00am - 12:00pm", type: "Individual Counseling", image: "img/875b4fb82c44a038466807b0dcf884cc.jpg" },
+  { name: "Abella Danger", date: "23, Oct.", time: "11:00am - 12:00pm", type: "Individual Counseling", image: "/img/th (1).jpg" },
   { name: "Jude Oc", date: "23, Oct.", time: "11:00am - 12:00pm", type: "Individual Counseling", image: "img/1a96cf1393ff90ea75c15db5d648b03b.jpg" },
   { name: "Robert Fox", date: "23, Oct.", time: "11:00am - 12:00pm", type: "Individual Counseling", image:"img/875b4fb82c44a038466807b0dcf884cc.jpg" },
-  { name: "Abella Danger", date: "23, Oct.", time: "11:00am - 12:00pm", type: "Individual Counseling", image: "img/1a96cf1393ff90ea75c15db5d648b03b.jpg"},
+  { name: "Abella Danger", date: "23, Oct.", time: "11:00am - 12:00pm", type: "Individual Counseling", image: "/img/th (2).jpg"},
   { name: "Jude Oc", date: "23, Oct.", time: "11:00am - 12:00pm", type: "Individual Counseling", image: "/img/bb8a91a047deaa78f7a89228f80d92da.jpg" },
   { name: "Robert Fox", date: "23, Oct.", time: "11:00am - 12:00pm", type: "Individual Counseling", image: "img/875b4fb82c44a038466807b0dcf884cc.jpg" },
-  { name: "Abella Danger", date: "23, Oct.", time: "11:00am - 12:00pm", type: "Individual Counseling", image:"img/1a96cf1393ff90ea75c15db5d648b03b.jpg" },
+  { name: "Abella Danger", date: "23, Oct.", time: "11:00am - 12:00pm", type: "Individual Counseling", image:"/img/th (3).jpg" },
   { name: "Jude Oc", date: "23, Oct.", time: "11:00am - 12:00pm", type: "Individual Counseling", image: "/img/bb8a91a047deaa78f7a89228f80d92da.jpg" },
-  { name: "Robert Fox", date: "23, Oct.", time: "11:00am - 12:00pm", type: "Individual Counseling", image: "img/875b4fb82c44a038466807b0dcf884cc.jpg" },
+  { name: "Robert Fox", date: "23, Oct.", time: "11:00am - 12:00pm", type: "Individual Counseling", image: "/img/th (4).jpg" },
   { name: "Abella Danger", date: "23, Oct.", time: "11:00am - 12:00pm", type: "Individual Counseling", image: "img/1a96cf1393ff90ea75c15db5d648b03b.jpg" },
   { name: "Jude Oc", date: "23, Oct.", time: "11:00am - 12:00pm", type: "Individual Counseling", image: "img/875b4fb82c44a038466807b0dcf884cc.jpg" },
   // More patients...

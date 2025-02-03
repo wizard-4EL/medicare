@@ -3,6 +3,7 @@ import { CgClipboard, CgDetailsMore, CgTemplate, CgMail, CgProfile, CgLogIn } fr
 import { RiSettings2Line } from 'react-icons/ri';
 import { FiSearch } from 'react-icons/fi';
 import { Link } from 'react-router-dom';
+import Modal from '../Components/Modal';
 
 function Dashboard() {
   const currentMonth = "October 2024"; 
@@ -69,9 +70,9 @@ function Dashboard() {
             />
             <FiSearch className="absolute left-3 top-3 text-gray-400" />
           </div>
-          <button className="bg-blue-600 text-white px-4 py-2 rounded-lg">
-            + Create New Schedule
-          </button>
+         
+            <Modal />
+        
         </header>
 
         {/* Daily Schedule */}
