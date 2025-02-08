@@ -10,7 +10,7 @@ import { FaRegChartBar, FaUserAlt, FaHeartbeat, FaMoneyBillAlt, FaShieldAlt, FaC
 function Reports() {
   return (
     <div className="flex min-h-screen bg-gray-100">
-      {/* Sidebar */}
+      
       <aside className="w-1/5 bg-blue-900 text-white p-6 flex flex-col justify-between shadow-lg">
         <div>
           <h2 className="text-3xl font-bold mb-8">MEDICARE</h2>
