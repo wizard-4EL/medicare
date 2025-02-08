@@ -68,6 +68,7 @@ function Modal() {
     try {
       // Add the schedule to Firestore
       const schedulesRef = collection(db, "schedules");
+      console.log("init schedule")
       // Format the data to match the dashboard's expected structure
       const scheduleData = {
         patientName: formData.patientName,

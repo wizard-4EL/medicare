@@ -23,10 +23,10 @@ function Dashboard() {
         const schedulesRef = collection(db, "schedules");
         const q = query(
           schedulesRef,
-          where("doctorId", "==", auth.currentUser.uid),
-          where("date", ">=", today.toISOString()),
-          orderBy("date", "asc"),
-          orderBy("time", "asc")
+          // where("doctorId", "==", auth.currentUser.uid),
+          // where("date", ">=", today.toISOString()),
+          // orderBy("date", "asc"),
+          // orderBy("time", "asc")
         );
 
         const unsubscribe = onSnapshot(q, (snapshot) => {
