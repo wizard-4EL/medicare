@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, memo } from "react";
 import { Link } from "react-router-dom";
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { doc, setDoc } from "firebase/firestore";
@@ -15,6 +15,19 @@ import {
   RiUserAddLine
 } from 'react-icons/ri';
 
+// Memoize the InputWithIcon component to prevent unnecessary re-renders
+const InputWithIcon = memo(({ icon: Icon, ...props }) => (
+  <div className="relative">
+    <span className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400">
+      <Icon />
+    </span>
+    <input
+      className="w-full pl-10 pr-4 py-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-transparent transition-colors"
+      {...props}
+    />
+  </div>
+));
+
 function SignUp() {
   const [formData, setFormData] = useState({
     username: "",
@@ -30,10 +43,12 @@ function SignUp() {
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
-  const { username, email, password, confirmPassword, number } = formData;
-
   const handleChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
+    const { name, value } = e.target;
+    setFormData(prev => ({
+      ...prev,
+      [name]: value
+    }));
   };
 
   const handleSubmit = async (e) => {
@@ -42,20 +57,24 @@ function SignUp() {
     setSuccess(null);
     setIsLoading(true);
 
-    if (password !== confirmPassword) {
+    if (formData.password !== formData.confirmPassword) {
       setError("Passwords do not match");
       setIsLoading(false);
       return;
     }
 
     try {
-      const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+      const userCredential = await createUserWithEmailAndPassword(
+        auth, 
+        formData.email, 
+        formData.password
+      );
       const user = userCredential.user;
 
       await setDoc(doc(db, "users", user.uid), {
-        username,
-        email,
-        number,
+        username: formData.username,
+        email: formData.email,
+        number: formData.number,
         role: "user",
         createdAt: new Date().toISOString(),
       });
@@ -78,18 +97,6 @@ function SignUp() {
       setIsLoading(false);
     }
   };
-
-  const InputWithIcon = ({ icon, ...props }) => (
-    <div className="relative">
-      <span className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400">
-        {icon}
-      </span>
-      <input
-        className="w-full pl-10 pr-4 py-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-transparent transition-colors"
-        {...props}
-      />
-    </div>
-  );
 
   return (
     <div className="min-h-screen w-full flex items-center justify-center bg-gradient-to-br from-teal-50 to-teal-100 p-4">
@@ -141,10 +148,10 @@ function SignUp() {
               <div>
                 <label className="block text-gray-700 font-medium mb-2">Username</label>
                 <InputWithIcon
-                  icon={<RiUserLine />}
+                  icon={RiUserLine}
                   type="text"
                   name="username"
-                  value={username}
+                  value={formData.username}
                   onChange={handleChange}
                   placeholder="Enter your username"
                   required
@@ -155,10 +162,10 @@ function SignUp() {
               <div>
                 <label className="block text-gray-700 font-medium mb-2">Email</label>
                 <InputWithIcon
-                  icon={<RiMailLine />}
+                  icon={RiMailLine}
                   type="email"
                   name="email"
-                  value={email}
+                  value={formData.email}
                   onChange={handleChange}
                   placeholder="Enter your email"
                   required
@@ -169,10 +176,10 @@ function SignUp() {
               <div>
                 <label className="block text-gray-700 font-medium mb-2">Phone Number</label>
                 <InputWithIcon
-                  icon={<RiPhoneLine />}
+                  icon={RiPhoneLine}
                   type="tel"
                   name="number"
-                  value={number}
+                  value={formData.number}
                   onChange={handleChange}
                   placeholder="Enter your phone number"
                   required
@@ -184,10 +191,10 @@ function SignUp() {
                 <label className="block text-gray-700 font-medium mb-2">Password</label>
                 <div className="relative">
                   <InputWithIcon
-                    icon={<RiLockPasswordLine />}
+                    icon={RiLockPasswordLine}
                     type={showPassword ? "text" : "password"}
                     name="password"
-                    value={password}
+                    value={formData.password}
                     onChange={handleChange}
                     placeholder="Create a password"
                     required
@@ -207,10 +214,10 @@ function SignUp() {
                 <label className="block text-gray-700 font-medium mb-2">Confirm Password</label>
                 <div className="relative">
                   <InputWithIcon
-                    icon={<RiLockPasswordLine />}
+                    icon={RiLockPasswordLine}
                     type={showConfirmPassword ? "text" : "password"}
                     name="confirmPassword"
-                    value={confirmPassword}
+                    value={formData.confirmPassword}
                     onChange={handleChange}
                     placeholder="Confirm your password"
                     required

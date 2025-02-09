@@ -9,7 +9,7 @@ import Appointments from './Pages/Appointment';
 import Patient from './Pages/Patient';
 import Message from './Pages/Message';
 import Report from './Pages/Report';
-
+import Settings from './Pages/Settings';
 
 
 
@@ -87,7 +87,11 @@ function App() {
             </ProtectedRoute>
           } />
        
-
+       <Route path="/user/settings" element={
+            <ProtectedRoute allowedRoles={['user']}>
+              <Settings />
+            </ProtectedRoute>
+          } />
  {/* Admin Routes */}
  <Route path="/admin/dashboard" element={
             <ProtectedRoute allowedRoles={['admin']}>

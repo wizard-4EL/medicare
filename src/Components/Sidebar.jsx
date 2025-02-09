@@ -37,37 +37,37 @@ function Sidebar() {
 
   const navItems = [
     { 
-      path: '/', 
+      path: '/user/dashboard', 
       icon: <RiDashboardLine className="text-xl" />, 
       label: 'Dashboard',
       description: 'Overview & Analytics'
     },
     { 
-      path: '/appointments', 
+      path: '/user/appointments', 
       icon: <RiCalendarCheckLine className="text-xl" />, 
       label: 'Appointments',
       description: 'Schedule & Bookings'
     },
     { 
-      path: '/patient', 
+      path: '/user/patient', 
       icon: <RiUserHeartLine className="text-xl" />, 
       label: 'Patients',
       description: 'Records & History'
     },
     { 
-      path: '/report', 
+      path: '/user/report', 
       icon: <RiFileChartLine className="text-xl" />, 
       label: 'Reports',
       description: 'Medical Analytics'
     },
     { 
-      path: '/message', 
+      path: '/user/message', 
       icon: <RiMessage2Line className="text-xl" />, 
       label: 'Messages',
       description: 'Communications'
     },
     { 
-      path: '/settings', 
+      path: '/user/settings', 
       icon: <RiSettings4Line className="text-xl" />, 
       label: 'Settings',
       description: 'Preferences'

@@ -1,309 +1,210 @@
-import React, { useState } from "react";
-import { collection, addDoc } from "firebase/firestore";
-import { db, auth } from "../firebase/config";
-
-// Dummy data for dropdowns
-const DUMMY_DEPARTMENTS = [
-  { id: "dept1", name: "Cardiology" },
-  { id: "dept2", name: "Neurology" },
-  { id: "dept3", name: "Pediatrics" },
-  { id: "dept4", name: "Orthopedics" },
-  { id: "dept5", name: "Dermatology" }
-];
-
-const DUMMY_DOCTORS = [
-  { id: "doc1", name: "Dr. John Smith" },
-  { id: "doc2", name: "Dr. Sarah Johnson" },
-  { id: "doc3", name: "Dr. Michael Brown" },
-  { id: "doc4", name: "Dr. Emily Davis" },
-  { id: "doc5", name: "Dr. James Wilson" }
-];
-
-const PATIENT_TYPES = [
-  "New Patient",
-  "Regular Patient",
-  "Chronic Patient",
-  "Insurance Patient"
-];
+import React, { useState } from 'react';
+import { RiCalendarCheckLine, RiCloseLine, RiAddLine } from 'react-icons/ri';
+import { collection, addDoc } from 'firebase/firestore';
+import { db } from '../firebase/config';
 
 function Modal() {
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(null);
-  const [success, setSuccess] = useState(null);
-
+  const [isOpen, setIsOpen] = useState(false);
   const [formData, setFormData] = useState({
-    patientName: "",
-    patientPhone: "",
-    department: "",
-    doctorId: "",
-    purpose: "",
-    date: "",
-    time: "",
-    patientType: "New Patient",
-    status: "scheduled"
+    patientName: '',
+    patientPhone: '',
+    date: '',
+    time: '',
+    purpose: '',
+    patientType: 'Regular'
   });
-
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    if (name === "dateTime") {
-      // Split datetime-local input into date and time
-      const dateTimeValue = new Date(value);
-      setFormData(prev => ({
-        ...prev,
-        date: dateTimeValue.toISOString().split('T')[0],
-        time: dateTimeValue.toTimeString().slice(0, 5)
-      }));
-    } else {
-      setFormData(prev => ({ ...prev, [name]: value }));
-    }
-  };
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setLoading(true);
-    setError(null);
-    setSuccess(null);
+    setIsLoading(true);
 
     try {
-      // Add the schedule to Firestore
-      const schedulesRef = collection(db, "schedules");
-      console.log("init schedule")
-      // Format the data to match the dashboard's expected structure
-      const scheduleData = {
-        patientName: formData.patientName,
-        patientPhone: formData.patientPhone,
-        department: formData.department,
-        doctorId: formData.doctorId,
-        doctorName: DUMMY_DOCTORS.find(d => d.id === formData.doctorId)?.name || '',
-        purpose: formData.purpose,
-        date: formData.date,
-        time: formData.time,
-        patientType: formData.patientType,
-        status: "scheduled",
-        createdAt: new Date().toISOString(),
-        userId: auth.currentUser?.uid || null
-      };
-
-      await addDoc(schedulesRef, scheduleData);
-
-      setSuccess("Appointment scheduled successfully!");
-      setFormData({
-        patientName: "",
-        patientPhone: "",
-        department: "",
-        doctorId: "",
-        purpose: "",
-        date: "",
-        time: "",
-        patientType: "New Patient",
-        status: "scheduled"
+      await addDoc(collection(db, "schedules"), {
+        ...formData,
+        createdAt: new Date().toISOString()
       });
-      
-      // Close modal after short delay
-      setTimeout(() => {
-        setIsModalOpen(false);
-        setSuccess(null);
-      }, 1500);
-    } catch (err) {
-      console.error("Error creating schedule:", err);
-      setError("Failed to create appointment. Please try again.");
+      setIsOpen(false);
+      setFormData({
+        patientName: '',
+        patientPhone: '',
+        date: '',
+        time: '',
+        purpose: '',
+        patientType: 'Regular'
+      });
+    } catch (error) {
+      console.error("Error adding schedule:", error);
     } finally {
-      setLoading(false);
+      setIsLoading(false);
     }
   };
 
+  const handleChange = (e) => {
+    setFormData({
+      ...formData,
+      [e.target.name]: e.target.value
+    });
+  };
+
   return (
-    <div className="p-6">
-      {/* Button to Open Modal */}
+    <>
+      {/* Responsive Button */}
       <button
-        onClick={() => setIsModalOpen(true)}
-        className="bg-blue-600 text-white px-6 py-3 rounded-lg transition duration-300 hover:bg-blue-700 focus:outline-none"
+        onClick={() => setIsOpen(true)}
+        className="flex items-center space-x-2 px-4 py-2 bg-gradient-to-r from-teal-600 to-teal-700 text-white rounded-lg hover:from-teal-700 hover:to-teal-800 transition-all duration-200 shadow-sm hover:shadow-md"
       >
-        + Create New Schedule
+        <RiAddLine className="text-xl" />
+        <span className="hidden sm:inline">New Schedule</span>
       </button>
 
-      {/* Booking Modal */}
-      {isModalOpen && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-60 px-4">
-          <div className="bg-white rounded-lg shadow-xl max-w-md w-full relative p-6">
-            {/* Close Icon */}
-            <button
-              onClick={() => setIsModalOpen(false)}
-              className="absolute top-4 right-4 text-gray-500 hover:text-gray-700 focus:outline-none"
-              aria-label="Close Modal"
-            >
-              <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none"
-                   viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2}
-                      d="M6 18L18 6M6 6l12 12" />
-              </svg>
-            </button>
+      {/* Modal Overlay */}
+      {isOpen && (
+        <div className="fixed inset-0 z-50 overflow-y-auto">
+          <div className="flex items-center justify-center min-h-screen px-4 pt-4 pb-20 text-center sm:p-0">
+            <div 
+              className="fixed inset-0 transition-opacity bg-gray-500 bg-opacity-75 backdrop-blur-sm"
+              onClick={() => setIsOpen(false)}
+            />
 
-            <h3 className="text-xl font-semibold mb-4 text-center">Schedule Appointment</h3>
-
-            {error && (
-              <div className="mb-4 p-3 bg-red-100 text-red-700 rounded-lg">{error}</div>
-            )}
-            {success && (
-              <div className="mb-4 p-3 bg-green-100 text-green-700 rounded-lg">{success}</div>
-            )}
-
-            <form onSubmit={handleSubmit} className="space-y-4">
-              {/* Patient Name */}
-              <div>
-                <label htmlFor="patientName" className="block text-sm font-medium text-gray-700">
-                  Patient Name
-                </label>
-                <input
-                  type="text"
-                  name="patientName"
-                  id="patientName"
-                  placeholder="Enter patient name"
-                  value={formData.patientName}
-                  onChange={handleChange}
-                  className="mt-1 w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:ring focus:border-blue-300"
-                  required
-                />
-              </div>
-
-              {/* Contact/Phone */}
-              <div>
-                <label htmlFor="patientPhone" className="block text-sm font-medium text-gray-700">
-                  Contact Number
-                </label>
-                <input
-                  type="tel"
-                  name="patientPhone"
-                  id="patientPhone"
-                  placeholder="Enter contact number"
-                  value={formData.patientPhone}
-                  onChange={handleChange}
-                  className="mt-1 w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:ring focus:border-blue-300"
-                  required
-                />
-              </div>
-
-              {/* Department */}
-              <div>
-                <label htmlFor="department" className="block text-sm font-medium text-gray-700">
-                  Department
-                </label>
-                <select
-                  name="department"
-                  id="department"
-                  value={formData.department}
-                  onChange={handleChange}
-                  className="mt-1 w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:ring focus:border-blue-300"
-                  required
-                >
-                  <option value="">Select Department</option>
-                  {DUMMY_DEPARTMENTS.map(dept => (
-                    <option key={dept.id} value={dept.id}>
-                      {dept.name}
-                    </option>
-                  ))}
-                </select>
-              </div>
-
-              {/* Doctor */}
-              <div>
-                <label htmlFor="doctorId" className="block text-sm font-medium text-gray-700">
-                  Doctor
-                </label>
-                <select
-                  name="doctorId"
-                  id="doctorId"
-                  value={formData.doctorId}
-                  onChange={handleChange}
-                  className="mt-1 w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:ring focus:border-blue-300"
-                  required
-                >
-                  <option value="">Select Doctor</option>
-                  {DUMMY_DOCTORS.map(doctor => (
-                    <option key={doctor.id} value={doctor.id}>
-                      {doctor.name}
-                    </option>
-                  ))}
-                </select>
-              </div>
-
-              {/* Patient Type */}
-              <div>
-                <label htmlFor="patientType" className="block text-sm font-medium text-gray-700">
-                  Patient Type
-                </label>
-                <select
-                  name="patientType"
-                  id="patientType"
-                  value={formData.patientType}
-                  onChange={handleChange}
-                  className="mt-1 w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:ring focus:border-blue-300"
-                  required
-                >
-                  {PATIENT_TYPES.map(type => (
-                    <option key={type} value={type}>
-                      {type}
-                    </option>
-                  ))}
-                </select>
-              </div>
-
-              {/* Purpose/Medical Issue */}
-              <div>
-                <label htmlFor="purpose" className="block text-sm font-medium text-gray-700">
-                  Purpose of Visit
-                </label>
-                <input
-                  type="text"
-                  name="purpose"
-                  id="purpose"
-                  placeholder="Describe the purpose"
-                  value={formData.purpose}
-                  onChange={handleChange}
-                  className="mt-1 w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:ring focus:border-blue-300"
-                  required
-                />
-              </div>
-
-              {/* Date and Time */}
-              <div>
-                <label htmlFor="dateTime" className="block text-sm font-medium text-gray-700">
-                  Appointment Date & Time
-                </label>
-                <input
-                  type="datetime-local"
-                  name="dateTime"
-                  id="dateTime"
-                  onChange={handleChange}
-                  className="mt-1 w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:ring focus:border-blue-300"
-                  required
-                />
-              </div>
-
-              {/* Form Buttons */}
-              <div className="flex justify-end space-x-3 mt-6">
+            {/* Modal Panel */}
+            <div className="relative w-full max-w-lg p-6 mx-auto bg-white rounded-2xl shadow-xl">
+              <div className="flex items-center justify-between mb-6">
+                <div className="flex items-center space-x-2">
+                  <RiCalendarCheckLine className="text-2xl text-teal-600" />
+                  <h3 className="text-xl font-bold text-gray-800">New Appointment</h3>
+                </div>
                 <button
-                  type="button"
-                  onClick={() => setIsModalOpen(false)}
-                  className="px-4 py-2 bg-gray-300 text-gray-700 rounded hover:bg-gray-400 transition duration-200"
-                  disabled={loading}
+                  onClick={() => setIsOpen(false)}
+                  className="text-gray-400 hover:text-gray-600 transition-colors"
                 >
-                  Cancel
-                </button>
-                <button
-                  type="submit"
-                  className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 transition duration-200"
-                  disabled={loading}
-                >
-                  {loading ? "Scheduling..." : "Schedule Appointment"}
+                  <RiCloseLine className="text-2xl" />
                 </button>
               </div>
-            </form>
+
+              <form onSubmit={handleSubmit} className="space-y-4">
+                <div className="space-y-2">
+                  <label className="block text-sm font-medium text-gray-700">
+                    Patient Name
+                  </label>
+                  <input
+                    type="text"
+                    name="patientName"
+                    value={formData.patientName}
+                    onChange={handleChange}
+                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-transparent"
+                    required
+                  />
+                </div>
+
+                <div className="space-y-2">
+                  <label className="block text-sm font-medium text-gray-700">
+                    Phone Number
+                  </label>
+                  <input
+                    type="tel"
+                    name="patientPhone"
+                    value={formData.patientPhone}
+                    onChange={handleChange}
+                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-transparent"
+                    required
+                  />
+                </div>
+
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  <div className="space-y-2">
+                    <label className="block text-sm font-medium text-gray-700">
+                      Date
+                    </label>
+                    <input
+                      type="date"
+                      name="date"
+                      value={formData.date}
+                      onChange={handleChange}
+                      className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-transparent"
+                      required
+                    />
+                  </div>
+
+                  <div className="space-y-2">
+                    <label className="block text-sm font-medium text-gray-700">
+                      Time
+                    </label>
+                    <input
+                      type="time"
+                      name="time"
+                      value={formData.time}
+                      onChange={handleChange}
+                      className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-transparent"
+                      required
+                    />
+                  </div>
+                </div>
+
+                <div className="space-y-2">
+                  <label className="block text-sm font-medium text-gray-700">
+                    Purpose
+                  </label>
+                  <textarea
+                    name="purpose"
+                    value={formData.purpose}
+                    onChange={handleChange}
+                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-transparent"
+                    rows="3"
+                    required
+                  />
+                </div>
+
+                <div className="space-y-2">
+                  <label className="block text-sm font-medium text-gray-700">
+                    Patient Type
+                  </label>
+                  <select
+                    name="patientType"
+                    value={formData.patientType}
+                    onChange={handleChange}
+                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-transparent"
+                    required
+                  >
+                    <option value="Regular">Regular</option>
+                    <option value="New Patient">New Patient</option>
+                    <option value="Insurance">Insurance</option>
+                    <option value="Chronic Patient">Chronic Patient</option>
+                  </select>
+                </div>
+
+                <div className="flex items-center justify-end space-x-3 mt-6">
+                  <button
+                    type="button"
+                    onClick={() => setIsOpen(false)}
+                    className="px-4 py-2 text-sm font-medium text-gray-700 bg-gray-100 rounded-lg hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500"
+                  >
+                    Cancel
+                  </button>
+                  <button
+                    type="submit"
+                    disabled={isLoading}
+                    className="flex items-center justify-center px-4 py-2 text-sm font-medium text-white bg-gradient-to-r from-teal-600 to-teal-700 rounded-lg hover:from-teal-700 hover:to-teal-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-teal-500 disabled:opacity-70"
+                  >
+                    {isLoading ? (
+                      <>
+                        <svg className="w-4 h-4 mr-2 animate-spin" viewBox="0 0 24 24">
+                          <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" fill="none" />
+                          <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" />
+                        </svg>
+                        Creating...
+                      </>
+                    ) : (
+                      'Create Schedule'
+                    )}
+                  </button>
+                </div>
+              </form>
+            </div>
           </div>
         </div>
       )}
-    </div>
+    </>
   );
 }
 
