@@ -1,9 +1,17 @@
 import React, { useState, useEffect } from 'react';
-import { FiSearch } from 'react-icons/fi';
-import { collection, query, where, orderBy, onSnapshot } from 'firebase/firestore';
+import { collection, query, onSnapshot } from 'firebase/firestore';
 import { db, auth } from '../firebase/config';
-import Modal from '../Components/Modal';
 import Sidebar from '../Components/Sidebar';
+import Modal from '../Components/Modal';
+import { 
+  RiSearchLine, 
+  RiCalendarCheckLine,
+  RiUserHeartLine,
+  RiStethoscopeLine,
+  RiTimeLine,
+  RiArrowUpLine,
+  RiArrowRightLine
+} from 'react-icons/ri';
 
 function Dashboard() {
   const [schedules, setSchedules] = useState([]);
@@ -17,17 +25,8 @@ function Dashboard() {
     const fetchSchedules = async () => {
       setLoading(true);
       try {
-        const today = new Date();
-        today.setHours(0, 0, 0, 0);
-
         const schedulesRef = collection(db, "schedules");
-        const q = query(
-          schedulesRef,
-          // where("doctorId", "==", auth.currentUser.uid),
-          // where("date", ">=", today.toISOString()),
-          // orderBy("date", "asc"),
-          // orderBy("time", "asc")
-        );
+        const q = query(schedulesRef);
 
         const unsubscribe = onSnapshot(q, (snapshot) => {
           const schedulesData = snapshot.docs.map(doc => ({
@@ -55,175 +54,218 @@ function Dashboard() {
 
   const getTagColor = (patientType) => {
     const colors = {
-      'New Patient': 'bg-red-600',
-      'Insurance': 'bg-purple-600',
-      'Chronic Patient': 'bg-green-600',
-      'Regular': 'bg-blue-600'
+      'New Patient': 'bg-rose-500 border-rose-600',
+      'Insurance': 'bg-purple-500 border-purple-600',
+      'Chronic Patient': 'bg-emerald-500 border-emerald-600',
+      'Regular': 'bg-blue-500 border-blue-600'
     };
-    return colors[patientType] || 'bg-gray-600';
+    return colors[patientType] || 'bg-gray-500 border-gray-600';
   };
 
+  const StatCard = ({ icon: Icon, title, value, trend, subtitle }) => (
+    <div className="bg-white rounded-xl p-6 shadow-sm border border-gray-100">
+      <div className="flex items-center justify-between">
+        <div className="p-2 bg-teal-50 rounded-lg">
+          <Icon className="text-2xl text-teal-600" />
+        </div>
+        {trend && (
+          <span className="flex items-center text-sm text-emerald-600 bg-emerald-50 px-2 py-1 rounded-full">
+            <RiArrowUpLine className="mr-1" />
+            {trend}
+          </span>
+        )}
+      </div>
+      <h3 className="text-2xl font-bold mt-4 text-gray-800">{value}</h3>
+      <div className="flex items-center justify-between mt-2">
+        <p className="text-sm text-gray-500">{title}</p>
+        {subtitle && <p className="text-xs text-gray-400">{subtitle}</p>}
+      </div>
+    </div>
+  );
+
   return (
-    <div className="flex h-screen bg-gray-100">
+    <div className="flex h-screen bg-gray-50">
       <Sidebar />
 
-      {/* Main Content */}
-      <div className="flex-1 p-6">
-        {/* Header */}
-        <header className="flex justify-between items-center mb-6">
-          <h2 className="text-xl font-semibold font-mono">
-            Good Morning, Dr. {auth.currentUser?.displayName || 'Doctor'}
-          </h2>
-          <div className="relative">
-            <input
-              type="text"
-              placeholder="Search"
-              className="pl-10 pr-4 py-2 rounded-lg border border-blue-600 focus:outline-none"
-            />
-            <FiSearch className="absolute left-3 top-3 text-gray-400" />
-          </div>
-          <Modal />
-        </header>
-
-        {/* Daily Schedule */}
-        <section className="bg-gray-100 p-6 rounded-md shadow-md mb-8">
-          <h3 className="text-lg font-bold mb-4 font-mono">Daily Schedule</h3>
-          {loading ? (
-            <div className="text-center py-4">Loading schedules...</div>
-          ) : schedules.length === 0 ? (
-            <div className="text-center py-4 text-gray-500">No appointments scheduled for today</div>
-          ) : (
-            <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
-              {schedules.map((schedule) => (
-                <div key={schedule.id} className="p-4 bg-white border rounded-md">
-                  <p className="text-xl font-bold font-mono">{schedule.time}</p>
-                  <p className="text-gray-600">{schedule.patientName}</p>
-                  <p className="text-gray-500">{schedule.purpose}</p>
-                  <p className="text-gray-400">{schedule.patientPhone}</p>
-                  <span className={`inline-block mt-2 px-3 py-1 text-sm text-white ${getTagColor(schedule.patientType)} rounded-lg`}>
-                    {schedule.patientType}
-                  </span>
-                </div>
-              ))}
+      <div className="flex-1 overflow-auto">
+        <div className="p-8">
+          {/* Header */}
+          <div className="flex justify-between items-center mb-8">
+            <div>
+              <h1 className="text-2xl font-bold text-gray-800">
+                Welcome back, Dr. {auth.currentUser?.displayName || 'Doctor'}
+              </h1>
+              <p className="text-gray-500 mt-1">Here's what's happening today</p>
             </div>
-          )}
-        </section>
-
-        {/* Analytics and Reports */}
-        <section className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          {/* Patient Stats */}
-          <div className="bg-white p-6 rounded-lg shadow-lg">
-            <h4 className="text-lg font-bold mb-4 text-gray-800 font-mono">Patient Stats</h4>
-            <div className="relative flex items-center justify-center">
-              <svg className="w-24 h-24" viewBox="0 0 36 36" aria-label="Patient Stats">
-                <circle
-                  className="text-blue-500"
-                  stroke="currentColor"
-                  strokeWidth="3"
-                  fill="transparent"
-                  r="16"
-                  cx="18"
-                  cy="18"
-                  strokeDasharray="63 37"
-                  transform="rotate(-90 18 18)"
-                />
-                <circle
-                  className="text-green-500"
-                  stroke="currentColor"
-                  strokeWidth="3"
-                  fill="transparent"
-                  r="16"
-                  cx="18"
-                  cy="18"
-                  strokeDasharray="25 75"
-                  strokeDashoffset="63"
-                  transform="rotate(-90 18 18)"
-                />
-                <circle
-                  className="text-gray-300"
-                  stroke="currentColor"
-                  strokeWidth="3"
-                  fill="transparent"
-                  r="16"
-                  cx="18"
-                  cy="18"
-                  strokeDasharray="12 88"
-                  strokeDashoffset="88"
-                  transform="rotate(-90 18 18)"
-                />
-              </svg>
-              <div className="absolute w-12 h-12 bg-white rounded-full flex items-center justify-center text-sm font-bold">
-                100%
-              </div>
-            </div>
-            <div className="mt-4">
-              <div className="flex items-center space-x-2">
-                <span className="block w-4 h-4 bg-blue-500 rounded"></span>
-                <span className="text-gray-600">New Patients: 63%</span>
-              </div>
-              <div className="flex items-center space-x-2 mt-2">
-                <span className="block w-4 h-4 bg-green-500 rounded"></span>
-                <span className="text-gray-600">Patients: 25%</span>
-              </div>
-              <div className="flex items-center space-x-2 mt-2">
-                <span className="block w-4 h-4 bg-gray-300 rounded"></span>
-                <span className="text-gray-600">Others: 12%</span>
-              </div>
-            </div>
-          </div>
-
-          {/* Daily Traffic */}
-          <div className="bg-white p-6 rounded-lg shadow-lg">
-            <h4 className="text-lg font-bold mb-4 text-gray-800 font-mono">Daily Traffic</h4>
+            
             <div className="flex items-center space-x-4">
-              <p className="text-3xl font-bold text-gray-900">2,579</p>
-              <p className="text-green-500 bg-green-100 px-2 py-1 rounded-full text-sm font-medium">
-                +2.45%
-              </p>
-            </div>
-            <div className="mt-4">
-              <svg viewBox="0 0 100 40" className="w-full h-32" aria-label="Traffic Chart">
-                <rect x="5" y="15" width="10" height="25" fill="#60a5fa" rx="2" />
-                <rect x="20" y="10" width="10" height="30" fill="#3b82f6" rx="2" />
-                <rect x="35" y="5" width="10" height="35" fill="#2563eb" rx="2" />
-                <rect x="50" y="20" width="10" height="20" fill="#60a5fa" rx="2" />
-                <rect x="65" y="12" width="10" height="28" fill="#3b82f6" rx="2" />
-                <rect x="80" y="8" width="10" height="32" fill="#2563eb" rx="2" />
-              </svg>
+              <div className="relative">
+                <input
+                  type="text"
+                  placeholder="Search patients..."
+                  className="pl-10 pr-4 py-2 w-64 rounded-lg border border-gray-200 focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-transparent"
+                />
+                <RiSearchLine className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" />
+              </div>
+              <Modal />
             </div>
           </div>
 
-          {/* Consultations */}
-          <div className="bg-white p-6 rounded-lg shadow-lg">
-            <h4 className="text-lg font-bold mb-4 text-gray-800 font-mono">Consultations</h4>
-            <div className="flex items-center justify-between mb-4">
-              <p className="text-gray-700 text-sm">Upcoming Consultations</p>
-              <p className="text-blue-600 text-sm">View All</p>
-              <p className="text-gray-500 text-sm">{currentMonth}</p>
+          {/* Stats Overview */}
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
+            <StatCard
+              icon={RiUserHeartLine}
+              title="Total Patients"
+              value="1,234"
+              trend="+12.5%"
+              subtitle="vs last month"
+            />
+            <StatCard
+              icon={RiCalendarCheckLine}
+              title="Appointments"
+              value="48"
+              subtitle="Today"
+            />
+            <StatCard
+              icon={RiStethoscopeLine}
+              title="Consultations"
+              value="28"
+              trend="+8.1%"
+            />
+            <StatCard
+              icon={RiTimeLine}
+              title="Avg. Wait Time"
+              value="12min"
+              subtitle="Today"
+            />
+          </div>
+
+          {/* Appointments Section */}
+          <div className="bg-white rounded-xl shadow-sm border border-gray-100 mb-8">
+            <div className="p-6 border-b border-gray-100">
+              <div className="flex items-center justify-between">
+                <h2 className="text-xl font-bold text-gray-800">Today's Appointments</h2>
+                <button className="text-teal-600 hover:text-teal-700 text-sm font-medium flex items-center">
+                  View All <RiArrowRightLine className="ml-1" />
+                </button>
+              </div>
             </div>
-            <div className="p-4 rounded-lg bg-gray-50">
-              <div className="grid grid-cols-7 gap-2 text-center text-sm">
-                {["Mo", "Tu", "We", "Th", "Fr", "Sa", "Su"].map((day) => (
-                  <span key={day} className="font-semibold text-gray-600">
-                    {day}
-                  </span>
-                ))}
-                {Array.from({ length: 31 }, (_, i) => i + 1).map((date) => (
-                  <span
-                    key={date}
-                    className={`px-3 py-1 rounded-full ${
-                      highlightedDates.includes(date)
-                        ? "bg-blue-500 text-white"
-                        : "text-gray-700"
-                    } hover:bg-blue-200 cursor-pointer`}
-                  >
-                    {date}
-                  </span>
-                ))}
+
+            <div className="p-6">
+              {loading ? (
+                <div className="text-center py-8">
+                  <div className="animate-spin rounded-full h-12 w-12 border-4 border-teal-500 border-t-transparent mx-auto"></div>
+                  <p className="text-gray-500 mt-4">Loading appointments...</p>
+                </div>
+              ) : schedules.length === 0 ? (
+                <div className="text-center py-8">
+                  <RiCalendarCheckLine className="text-4xl text-gray-300 mx-auto mb-4" />
+                  <p className="text-gray-500">No appointments scheduled for today</p>
+                </div>
+              ) : (
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                  {schedules.map((schedule) => (
+                    <div key={schedule.id} 
+                      className="p-4 rounded-lg border border-gray-100 hover:shadow-md transition-shadow"
+                    >
+                      <div className="flex items-center justify-between mb-3">
+                        <span className="font-semibold text-gray-800">{schedule.time}</span>
+                        <span className={`px-3 py-1 text-xs font-medium text-white rounded-full ${getTagColor(schedule.patientType)}`}>
+                          {schedule.patientType}
+                        </span>
+                      </div>
+                      <h3 className="font-medium text-gray-800">{schedule.patientName}</h3>
+                      <p className="text-sm text-gray-500 mt-1">{schedule.purpose}</p>
+                      <p className="text-sm text-gray-400 mt-2">{schedule.patientPhone}</p>
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
+          </div>
+
+          {/* Calendar and Analytics Grid */}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            {/* Calendar */}
+            <div className="col-span-2 bg-white rounded-xl shadow-sm border border-gray-100 p-6">
+              <div className="flex items-center justify-between mb-6">
+                <h2 className="text-xl font-bold text-gray-800">Calendar</h2>
+                <p className="text-gray-500">{currentMonth}</p>
+              </div>
+              <div className="rounded-lg bg-gray-50 p-4">
+                <div className="grid grid-cols-7 gap-2 text-center">
+                  {["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"].map((day) => (
+                    <span key={day} className="text-sm font-medium text-gray-600 py-2">
+                      {day}
+                    </span>
+                  ))}
+                  {Array.from({ length: 31 }, (_, i) => i + 1).map((date) => (
+                    <button
+                      key={date}
+                      className={`
+                        py-2 rounded-lg text-sm font-medium
+                        ${highlightedDates.includes(date)
+                          ? "bg-teal-500 text-white hover:bg-teal-600"
+                          : "text-gray-700 hover:bg-gray-100"}
+                        transition-colors
+                      `}
+                    >
+                      {date}
+                    </button>
+                  ))}
+                </div>
+              </div>
+            </div>
+
+            {/* Analytics Card */}
+            <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-6">
+              <h2 className="text-xl font-bold text-gray-800 mb-6">Patient Analytics</h2>
+              <div className="relative">
+                <svg className="w-full h-48" viewBox="0 0 100 100">
+                  <circle
+                    cx="50"
+                    cy="50"
+                    r="40"
+                    fill="none"
+                    stroke="#e2e8f0"
+                    strokeWidth="10"
+                  />
+                  <circle
+                    cx="50"
+                    cy="50"
+                    r="40"
+                    fill="none"
+                    stroke="#0d9488"
+                    strokeWidth="10"
+                    strokeDasharray="251.2"
+                    strokeDashoffset="62.8"
+                    transform="rotate(-90 50 50)"
+                  />
+                </svg>
+                <div className="absolute inset-0 flex items-center justify-center">
+                  <div className="text-center">
+                    <p className="text-3xl font-bold text-gray-800">75%</p>
+                    <p className="text-sm text-gray-500">Recovery Rate</p>
+                  </div>
+                </div>
+              </div>
+              <div className="mt-6 space-y-3">
+                <div className="flex items-center justify-between">
+                  <span className="text-sm text-gray-600">New Patients</span>
+                  <span className="text-sm font-medium text-gray-800">45%</span>
+                </div>
+                <div className="flex items-center justify-between">
+                  <span className="text-sm text-gray-600">Returning</span>
+                  <span className="text-sm font-medium text-gray-800">30%</span>
+                </div>
+                <div className="flex items-center justify-between">
+                  <span className="text-sm text-gray-600">Referrals</span>
+                  <span className="text-sm font-medium text-gray-800">25%</span>
+                </div>
               </div>
             </div>
           </div>
-        </section>
+        </div>
       </div>
     </div>
   );

@@ -5,7 +5,7 @@ import { db, auth } from '../firebase/config';
 import Modal from '../Components/Modal';
 import Sidebar from '../Components/Sidebar';
 
-function Dashboard() {
+function DoctorDashboard() {
   const [schedules, setSchedules] = useState([]);
   const [loading, setLoading] = useState(true);
   const currentMonth = "October 2024";
@@ -229,4 +229,4 @@ function Dashboard() {
   );
 }
 
-export default Dashboard;
+export default DoctorDashboard;

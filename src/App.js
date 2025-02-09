@@ -2,18 +2,48 @@ import React from 'react';
 import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom';
 
 // Page Imports
-import Login from './Pages/Login';
-import SignUp from './Pages/SignUp';
+import Login from './Auth/Login';
+import SignUp from './Auth/SignUp';
 import Dashboard from './Pages/Dashboard';
 import Appointments from './Pages/Appointment';
 import Patient from './Pages/Patient';
 import Message from './Pages/Message';
 import Report from './Pages/Report';
 
+
+
+
+
+import DoctorDashboard from './Doctor/Dashboard';
 // Placeholder for Protected Routes
-const PrivateRoute = ({ children }) => {
-  const token = localStorage.getItem('user'); // Check for the stored token
-  return token ? children : <Navigate to="/login" />;
+
+const getUserRole = () => {
+  const user = localStorage.getItem('user');
+  if (!user) return null;
+  
+  try {
+    // Parse the user data and get the role
+    const userData = JSON.parse(user);
+    return userData.role || 'user'; // Default to 'user' if role is not set
+  } catch (error) {
+    console.error('Error parsing user data:', error);
+    return null;
+  }
+};
+const ProtectedRoute = ({ children, allowedRoles }) => {
+  const role = getUserRole();
+  
+  if (!role) {
+    // Not logged in, redirect to login
+    return <Navigate to="/login" replace />;
+  }
+  
+  if (!allowedRoles.includes(role)) {
+    // Role not authorized, redirect to appropriate dashboard
+    return <Navigate to={role === 'admin' ? '/admin/dashboard' : '/dashboard'} replace />;
+  }
+  
+  return children;
 };
 
 
@@ -28,46 +58,43 @@ function App() {
           <Route path="/signup" element={<SignUp />} />
 
           {/* Protected Routes */}
-          <Route
-            path="/dashboard"
-            element={
-              <PrivateRoute>
-                <Dashboard />
-              </PrivateRoute>
-            }
-          />
-          <Route
-            path="/appointments"
-            element={
-              <PrivateRoute>
-                <Appointments />
-              </PrivateRoute>
-            }
-          />
-          <Route
-            path="/patient"
-            element={
-              <PrivateRoute>
-                <Patient />
-              </PrivateRoute>
-            }
-          />
-          <Route
-            path="/message"
-            element={
-              <PrivateRoute>
-                <Message />
-              </PrivateRoute>
-            }
-          />
-          <Route
-            path="/report"
-            element={
-              <PrivateRoute>
-                <Report />
-              </PrivateRoute>
-            }
-          />
+          <Route path="/user/dashboard" element={
+            <ProtectedRoute allowedRoles={['user']}>
+              <Dashboard />
+            </ProtectedRoute>
+          } />
+           <Route path="/user/appointments" element={
+            <ProtectedRoute allowedRoles={['user']}>
+              <Appointments />
+            </ProtectedRoute>
+          } />
+
+<Route path="/user/patient" element={
+            <ProtectedRoute allowedRoles={['user']}>
+              <Patient />
+            </ProtectedRoute>
+          } />
+
+<Route path="/user/message" element={
+            <ProtectedRoute allowedRoles={['user']}>
+              <Message />
+            </ProtectedRoute>
+          } />
+
+<Route path="/user/report" element={
+            <ProtectedRoute allowedRoles={['user']}>
+              <Report />
+            </ProtectedRoute>
+          } />
+       
+
+ {/* Admin Routes */}
+ <Route path="/admin/dashboard" element={
+            <ProtectedRoute allowedRoles={['admin']}>
+              <DoctorDashboard />
+            </ProtectedRoute>
+          } />
+
         </Routes>
       </div>
     </Router>
