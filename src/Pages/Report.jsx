@@ -1,9 +1,5 @@
 import React from 'react';
-import { 
-  CgClipboard, CgDetailsMore, CgTemplate, CgProfile, CgLogIn, CgMail 
-} from "react-icons/cg";
-import { RiSettings2Line } from "react-icons/ri";
-import { Link } from 'react-router-dom';
+
 import { BiStats, BiChart, BiUser } from 'react-icons/bi';
 import { FaRegChartBar, FaUserAlt, FaHeartbeat, FaMoneyBillAlt, FaShieldAlt, FaChartPie } from 'react-icons/fa';
 import Sidebar from '../Components/Sidebar';
