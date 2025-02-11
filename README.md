@@ -1,7 +1,8 @@
-# Getting Started with Create React App
+# MEDICARE DUMMY ERP SYSTEM
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
-
+This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app) and [Firebase](https://firebase.com) - to be changed to a stable database/backend structure Soon.
+## Developers
+[Raynold Klenam Shika](https://github.com/wizard-4El) and [Daniel Kwadwo Odoi](https://github.com/ReddIndiann) 
 ## Available Scripts
 
 In the project directory, you can run:
