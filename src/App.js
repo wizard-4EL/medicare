@@ -10,7 +10,7 @@ import Patient from './Pages/Patient';
 import Message from './Pages/Message';
 import Report from './Pages/Report';
 import Settings from './Pages/Settings';
-
+// import VideoCallSystem from './Doctor/VideoCall';
 
 
 
@@ -92,6 +92,11 @@ function App() {
               <Settings />
             </ProtectedRoute>
           } />
+               {/* <Route path="/user/video" element={
+            <ProtectedRoute allowedRoles={['user']}>
+              <VideoCallSystem />
+            </ProtectedRoute>
+          } /> */}
  {/* Admin Routes */}
  <Route path="/admin/dashboard" element={
             <ProtectedRoute allowedRoles={['admin']}>
