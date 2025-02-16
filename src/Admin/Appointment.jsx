@@ -16,7 +16,7 @@ const appointments = [
       description:
         "Individual Counseling for feeling stress all the time after office work # Being able to manage stress, emotions, and life's challenges in a healthy way.",
       patientName: "Yagami Light",
-      patientImage: "/img/bb8a91a047deaa78f7a89228f80d92da.jpg", 
+      patientImage: "img/th (3).jpg", 
       tag: "New Patient",
       tagColor: "bg-green-500", // green for new patient
     },
@@ -25,7 +25,7 @@ const appointments = [
     time: "11:00am - 12:00pm",
     description: "Individual Counseling for feeling stress all the time after office work # Being able to manage stress, emotions, and life's challenges in a healthy way.",
     patientName: "Yagami Light",
-    patientImage:  "img/875b4fb82c44a038466807b0dcf884cc.jpg",
+    patientImage:  "img/th (3).jpg",
     tag: "Returning Patient",
     tagColor: "bg-blue-500" // blue for returning patient
   },
@@ -34,7 +34,7 @@ const appointments = [
    time: "11:00am - 12:00pm",
    description: "Individual Counseling for feeling stress all the time after office work # Being able to manage stress, emotions, and life's challenges in a healthy way.",
    patientName: "Yagami Light",
-   patientImage:  "img/1a96cf1393ff90ea75c15db5d648b03b.jpg",
+   patientImage:  "img/th.jpg",
    tag: "New Patient",
    tagColor: "bg-green-500" // green for new patient
  },
@@ -43,7 +43,7 @@ const appointments = [
    time: "11:00am - 12:00pm",
    description: "Individual Counseling for feeling stress all the time after office work # Being able to manage stress, emotions, and life's challenges in a healthy way.",
    patientName: "Yagami Light",
-   patientImage:  "img/875b4fb82c44a038466807b0dcf884cc.jpg",
+   patientImage:  "img/th.jpg",
    tag: "Returning Patient",
    tagColor: "bg-blue-500" // blue for returning patient
  },
@@ -52,7 +52,7 @@ const appointments = [
    time: "11:00am - 12:00pm",
    description: "Individual Counseling for feeling stress all the time after office work # Being able to manage stress, emotions, and life's challenges in a healthy way.",
    patientName: "Yagami Light",
-   patientImage:  "img/1a96cf1393ff90ea75c15db5d648b03b.jpg",
+   patientImage:  "img/th.jpg",
    tag: "New Patient",
    tagColor: "bg-green-500" // green for new patient
  },
@@ -61,7 +61,7 @@ const appointments = [
    time: "11:00am - 12:00pm",
    description: "Individual Counseling for feeling stress all the time after office work # Being able to manage stress, emotions, and life's challenges in a healthy way.",
    patientName: "Yagami Light",
-   patientImage:  "img/1a96cf1393ff90ea75c15db5d648b03b.jpg",
+   patientImage:  "img/th.jpg",
    tag: "Returning Patient",
    tagColor: "bg-blue-500" // blue for returning patient
  },

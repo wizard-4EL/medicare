@@ -29,7 +29,7 @@ function PatientSidebar() {
   const handleSignOut = async () => {
     try {
       await signOut(auth)
-      localStorage.removeItem('user');
+      localStorage.removeItem('admin');
       navigate('/login');
     } catch (error) {
       console.error('Error signing out:', error);
@@ -38,37 +38,37 @@ function PatientSidebar() {
 
   const navItems = [
     { 
-      path: '/user/dashboard', 
+      path: '/admin/dashboard', 
       icon: <RiDashboardLine className="text-xl" />, 
       label: 'Dashboard',
       description: 'Overview & Analytics'
     },
     { 
-      path: '/user/appointments', 
+      path: '/admin/appointments', 
       icon: <RiCalendarCheckLine className="text-xl" />, 
       label: 'Appointments',
       description: 'Schedule & Bookings'
     },
     { 
-      path: '/user/patient', 
+      path: '/admin/patient', 
       icon: <RiUserHeartLine className="text-xl" />, 
       label: 'My Doctors',
       description: 'Records & History'
     },
     { 
-      path: '/user/report', 
+      path: '/admin/report', 
       icon: <RiFileChartLine className="text-xl" />, 
       label: 'Reports',
       description: 'Medical Analytics'
     },
     { 
-      path: '/user/message', 
+      path: '/admin/message', 
       icon: <RiMessage2Line className="text-xl" />, 
       label: 'Messages',
       description: 'Communications'
     },
     { 
-      path: '/user/settings', 
+      path: '/admin/settings', 
       icon: <RiSettings4Line className="text-xl" />, 
       label: 'Settings',
       description: 'Preferences'
