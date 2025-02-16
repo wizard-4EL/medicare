@@ -16,7 +16,8 @@ import {
 } from 'react-icons/ri';
 import { signOut } from 'firebase/auth';
 import { auth } from '../firebase/config';
-function Sidebar() {
+
+function DoctorSidebar() {
   const location = useLocation();
   const navigate = useNavigate();
   const [isOpen, setIsOpen] = useState(true);
@@ -37,37 +38,37 @@ function Sidebar() {
 
   const navItems = [
     { 
-      path: '/user/dashboard', 
+      path: '/doctor/dashboard', 
       icon: <RiDashboardLine className="text-xl" />, 
       label: 'Dashboard',
       description: 'Overview & Analytics'
     },
     { 
-      path: '/user/appointments', 
+      path: '/doctor/appointments', 
       icon: <RiCalendarCheckLine className="text-xl" />, 
       label: 'Appointments',
       description: 'Schedule & Bookings'
     },
     { 
-      path: '/user/patient', 
+      path: '/doctor/patient', 
       icon: <RiUserHeartLine className="text-xl" />, 
-      label: 'Patients',
+      label: 'My Patients',
       description: 'Records & History'
     },
     { 
-      path: '/user/report', 
+      path: '/doctor/report', 
       icon: <RiFileChartLine className="text-xl" />, 
       label: 'Reports',
       description: 'Medical Analytics'
     },
     { 
-      path: '/user/message', 
+      path: '/doctor/message', 
       icon: <RiMessage2Line className="text-xl" />, 
       label: 'Messages',
       description: 'Communications'
     },
     { 
-      path: '/user/settings', 
+      path: '/doctor/settings', 
       icon: <RiSettings4Line className="text-xl" />, 
       label: 'Settings',
       description: 'Preferences'
@@ -189,4 +190,4 @@ function Sidebar() {
   );
 }
 
-export default Sidebar;
+export default DoctorSidebar;

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { collection, query, getDocs } from 'firebase/firestore';
 import { db } from '../firebase/config';
-import DoctorSidebar from '../Components/DoctorSidebar';
+import AdminSidebar from '../Components/AdminSidebar';  
 import { 
   RiSearchLine, 
   RiUserAddLine,
@@ -12,7 +12,7 @@ import {
   RiMoreLine
 } from 'react-icons/ri';
 
-function DoctorPatients() {
+function AdminPatients() {
   const [users, setUsers] = useState([]);
   const [loading, setLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState('');
@@ -55,22 +55,22 @@ function DoctorPatients() {
 
   return (
     <div className="flex h-screen bg-gray-50">
-      <DoctorSidebar />
+      <AdminSidebar />
 
       <div className="flex-1 overflow-auto">
         <div className="p-8">
           {/* Header */}
           <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-8">
             <div>
-              <h1 className="text-2xl font-bold text-gray-800">Patients</h1>
-              <p className="text-gray-500 mt-1">{users.length} total patients</p>
+              <h1 className="text-2xl font-bold text-gray-800">Doctors</h1>
+              <p className="text-gray-500 mt-1">{users.length} total doctors</p>
             </div>
 
             <div className="flex flex-col sm:flex-row gap-3 w-full sm:w-auto">
               <div className="relative flex-grow sm:flex-grow-0">
                 <input
                   type="text"
-                  placeholder="Search patients..."
+                  placeholder="Search doctors..."
                   value={searchTerm}
                   onChange={(e) => setSearchTerm(e.target.value)}
                   className="w-full sm:w-64 pl-10 pr-4 py-2 rounded-lg border border-gray-200 focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-transparent"
@@ -84,13 +84,13 @@ function DoctorPatients() {
                   onChange={(e) => setFilterType(e.target.value)}
                   className="px-4 py-2 rounded-lg border border-gray-200 focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-transparent"
                 >
-                  <option value="all">All Patients</option>
-                  <option value="new">New Patients</option>
+                  <option value="all">All Doctors</option>
+                  <option value="new">New Doctors</option>
                 </select>
 
                 <button className="flex items-center space-x-2 px-4 py-2 bg-gradient-to-r from-teal-600 to-teal-700 text-white rounded-lg hover:from-teal-700 hover:to-teal-800 transition-all duration-200">
                   <RiUserAddLine />
-                  <span className="hidden sm:inline">Add Patient</span>
+                  <span className="hidden sm:inline">Add Doctor</span>
                 </button>
               </div>
             </div>
@@ -104,7 +104,7 @@ function DoctorPatients() {
           ) : filteredUsers.length === 0 ? (
             <div className="text-center py-12">
               <RiUserAddLine className="mx-auto h-12 w-12 text-gray-400" />
-              <h3 className="mt-2 text-sm font-medium text-gray-900">No patients found</h3>
+              <h3 className="mt-2 text-sm font-medium text-gray-900">No doctors found</h3>
               <p className="mt-1 text-sm text-gray-500">
                 Try adjusting your search or filter to find what you're looking for.
               </p>
@@ -116,7 +116,7 @@ function DoctorPatients() {
                   <thead className="bg-gray-50">
                     <tr>
                       <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                        Patient
+                        Doctor
                       </th>
                       <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                         Contact
@@ -193,4 +193,4 @@ function DoctorPatients() {
   );
 }
 
-export default DoctorPatients;
+export default AdminPatients;

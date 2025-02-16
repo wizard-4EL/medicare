@@ -2,12 +2,12 @@ import React from 'react';
 
 import { BiStats, BiChart, BiUser } from 'react-icons/bi';
 import { FaRegChartBar, FaUserAlt, FaHeartbeat, FaMoneyBillAlt, FaShieldAlt, FaChartPie } from 'react-icons/fa';
-import PatientSidebar from '../Components/PatientSidebar';
-function Reports() {
+import AdminSidebar from '../Components/AdminSidebar';  
+function AdminReports() {
   return (
     <div className="flex min-h-screen bg-gray-100">
       
-    <PatientSidebar/>
+    <AdminSidebar/>
 
       {/* Main Content */}
       <main className="flex-1 p-8 overflow-auto">
@@ -203,4 +203,4 @@ function Reports() {
   );
 }
 
-export default Reports;
+export default AdminReports;

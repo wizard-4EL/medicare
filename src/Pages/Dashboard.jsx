@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { collection, query, onSnapshot } from 'firebase/firestore';
 import { db, auth } from '../firebase/config';
-import Sidebar from '../Components/Sidebar';
+import PatientSidebar from '../Components/PatientSidebar';
 import Modal from '../Components/Modal';
 import { 
   RiSearchLine, 
@@ -85,7 +85,7 @@ function Dashboard() {
 
   return (
     <div className="flex h-screen bg-gray-50">
-      <Sidebar />
+      <PatientSidebar />
 
       <div className="flex-1 overflow-auto">
         <div className="p-8">
@@ -93,7 +93,7 @@ function Dashboard() {
           <div className="flex justify-between items-center mb-8">
             <div>
               <h1 className="text-2xl font-bold text-gray-800">
-                Welcome back, Dr. {auth.currentUser?.displayName || 'Doctor'}
+                Welcome back,  {auth.currentUser?.displayName || 'Doctor'}
               </h1>
               <p className="text-gray-500 mt-1">Here's what's happening today</p>
             </div>

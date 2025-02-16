@@ -75,7 +75,7 @@ function SignUp() {
         username: formData.username,
         email: formData.email,
         number: formData.number,
-        role: "user",
+        role: "doctor",
         createdAt: new Date().toISOString(),
       });
 

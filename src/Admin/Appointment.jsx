@@ -3,7 +3,7 @@ import { FaSearch } from 'react-icons/fa';
 import { CgClipboard, CgDetailsMore, CgTemplate, CgMail, CgProfile, CgLogIn } from "react-icons/cg";
 import { RiSettings2Line } from "react-icons/ri";
 import { Link } from 'react-router-dom';
-import DoctorSidebar from '../Components/DoctorSidebar';
+import AdminSidebar from '../Components/AdminSidebar';  
 
 
 
@@ -68,11 +68,11 @@ const appointments = [
   // Add more appointments as needed
 ];
 
-function DoctorAppointments() {
+function AdminAppointments() {
   return (
    <div className="flex h-screen bg-gray-100">
          {/* Sidebar */}
-         <DoctorSidebar />
+         <AdminSidebar />
 
       {/* Main Content */}
       <div className="flex-1 p-6">
@@ -115,4 +115,4 @@ function DoctorAppointments() {
   );
 }
 
-export default DoctorAppointments;
+export default AdminAppointments;

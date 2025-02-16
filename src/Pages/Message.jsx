@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { collection, getDocs, query, where, orderBy, addDoc, onSnapshot, writeBatch } from 'firebase/firestore';
 import { FaSearch, FaPaperPlane } from 'react-icons/fa';
 import { db, auth } from '../firebase/config';
-import Sidebar from '../Components/Sidebar';
+import PatientSidebar from '../Components/PatientSidebar';
 import VideoCallSystem from '../Components/VideoCall';
 
 // Chat Message Component
@@ -171,7 +171,7 @@ function Messages() {
 
   return (
     <div className="flex h-screen bg-gray-100">
-      <Sidebar />
+      <PatientSidebar />
 
       <div className="flex-1 p-6">
         <header className="flex flex-col md:flex-row justify-between items-center mb-6">

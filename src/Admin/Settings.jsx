@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { doc, updateDoc, getDoc } from 'firebase/firestore';
 import { updateProfile, updateEmail, updatePassword, EmailAuthProvider, reauthenticateWithCredential } from 'firebase/auth';
 import { db, auth } from '../firebase/config';
-import PatientSidebar from '../Components/PatientSidebar';
+import AdminSidebar from '../Components/AdminSidebar';  
 import { 
   RiUser3Line,
   RiMailLine,
@@ -16,7 +16,7 @@ import {
   RiShieldUserLine
 } from 'react-icons/ri';
 
-function Settings() {
+function AdminSettings() {
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
   const [currentPassword, setCurrentPassword] = useState('');
@@ -163,7 +163,7 @@ function Settings() {
   if (loading) {
     return (
       <div className="flex h-screen bg-gray-50">
-        <PatientSidebar />
+        <AdminSidebar />
         <div className="flex-1 flex items-center justify-center">
           <div className="animate-spin rounded-full h-12 w-12 border-4 border-teal-500 border-t-transparent"></div>
         </div>
@@ -173,7 +173,7 @@ function Settings() {
 
   return (
     <div className="flex h-screen bg-gray-50">
-      <PatientSidebar />
+      <AdminSidebar />
       
       <div className="flex-1 overflow-auto">
         <div className="p-8">
@@ -362,4 +362,4 @@ function Settings() {
   );
 }
 
-export default Settings;
+export default AdminSettings;

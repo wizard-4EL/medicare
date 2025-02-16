@@ -1,63 +1,15 @@
 import React from 'react';
-import { 
-  CgClipboard, CgDetailsMore, CgTemplate, CgProfile, CgLogIn, CgMail 
-} from "react-icons/cg";
-import { RiSettings2Line } from "react-icons/ri";
-import { Link } from 'react-router-dom';
+
 import { BiStats, BiChart, BiUser } from 'react-icons/bi';
 import { FaRegChartBar, FaUserAlt, FaHeartbeat, FaMoneyBillAlt, FaShieldAlt, FaChartPie } from 'react-icons/fa';
+import DoctorSidebar from '../Components/DoctorSidebar';
 
-function Reports() {
+
+function DoctorReports() {
   return (
     <div className="flex min-h-screen bg-gray-100">
       
-      <aside className="w-1/5 bg-blue-900 text-white p-6 flex flex-col justify-between shadow-lg">
-        <div>
-          <h2 className="text-3xl font-bold mb-8">MEDICARE</h2>
-          <ul className="space-y-4">
-            <li className="p-3 hover:bg-blue-700 rounded transition cursor-pointer">
-              <Link to="/dashboard" className="flex items-center space-x-3">
-                <CgDetailsMore className="text-xl" />
-                <span>Dashboard</span>
-              </Link>
-            </li>
-            <li className="p-3 hover:bg-blue-700 rounded transition cursor-pointer">
-              <Link to="/appointments" className="flex items-center space-x-3">
-                <CgTemplate className="text-xl" />
-                <span>Appointments</span>
-              </Link>
-            </li>
-            <li className="p-3 hover:bg-blue-700 rounded transition cursor-pointer">
-              <Link to="/patients" className="flex items-center space-x-3">
-                <CgProfile className="text-xl" />
-                <span>Patients</span>
-              </Link>
-            </li>
-            <li className="p-3 bg-blue-800 rounded transition cursor-pointer">
-              <Link to="/reports" className="flex items-center space-x-3">
-                <CgClipboard className="text-xl" />
-                <span>Reports</span>
-              </Link>
-            </li>
-            <li className="p-3 hover:bg-blue-700 rounded transition cursor-pointer">
-              <Link to="/message" className="flex items-center space-x-3">
-                <CgMail className="text-xl" />
-                <span>MessageS</span>
-              </Link>
-            </li>
-            <li className="p-3 hover:bg-blue-700 rounded transition cursor-pointer">
-              <Link to="/settings" className="flex items-center space-x-3">
-                <RiSettings2Line className="text-xl" />
-                <span>Settings</span>
-              </Link>
-            </li>
-          </ul>
-        </div>
-        <button className="flex items-center space-x-3 p-3 bg-red-600 hover:bg-red-700 rounded transition">
-          <CgLogIn className="text-xl" />
-          <span>Logout</span>
-        </button>
-      </aside>
+    <DoctorSidebar/>
 
       {/* Main Content */}
       <main className="flex-1 p-8 overflow-auto">
@@ -253,4 +205,4 @@ function Reports() {
   );
 }
 
-export default Reports;
+export default DoctorReports;

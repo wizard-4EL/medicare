@@ -3,7 +3,7 @@ import { FaSearch } from 'react-icons/fa';
 import { CgClipboard, CgDetailsMore, CgTemplate, CgMail, CgProfile, CgLogIn } from "react-icons/cg";
 import { RiSettings2Line } from "react-icons/ri";
 import { Link } from 'react-router-dom';
-import Sidebar from '../Components/Sidebar';
+import PatientSidebar from '../Components/PatientSidebar';  
 
 
 
@@ -72,7 +72,7 @@ function Appointments() {
   return (
    <div className="flex h-screen bg-gray-100">
          {/* Sidebar */}
-         <Sidebar />
+         <PatientSidebar />
 
       {/* Main Content */}
       <div className="flex-1 p-6">

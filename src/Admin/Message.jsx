@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { collection, getDocs, query, where, orderBy, addDoc, onSnapshot, writeBatch } from 'firebase/firestore';
 import { FaSearch, FaPaperPlane } from 'react-icons/fa';
 import { db, auth } from '../firebase/config';
-import DoctorSidebar from '../Components/DoctorSidebar';
+import AdminSidebar from '../Components/AdminSidebar';  
 import VideoCallSystem from '../Components/VideoCall';
 
 // Chat Message Component
@@ -17,7 +17,7 @@ const ChatMessage = ({ message, isCurrentUser }) => (
   </div>
 );
 
-function DoctorMessages() {
+function AdminMessages() {
   const [activeTab, setActiveTab] = useState("messages");
   const [selectedUser, setSelectedUser] = useState(null);
   const [users, setUsers] = useState([]);
@@ -171,7 +171,7 @@ function DoctorMessages() {
 
   return (
     <div className="flex h-screen bg-gray-100">
-      <DoctorSidebar />
+      <AdminSidebar />
 
       <div className="flex-1 p-6">
         <header className="flex flex-col md:flex-row justify-between items-center mb-6">
@@ -344,4 +344,4 @@ function DoctorMessages() {
   );
 }
 
-export default DoctorMessages;
+export default AdminMessages;

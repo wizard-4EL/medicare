@@ -39,8 +39,8 @@ function Login() {
       
       localStorage.setItem("user", JSON.stringify(userToStore));
       
-      if (userData.role === 'admin') {
-        navigate('/admin/dashboard', { replace: true });
+      if (userData.role === 'doctor') {
+        navigate('/doctor/dashboard', { replace: true });
       } else {
         navigate('/user/dashboard', { replace: true });
       }

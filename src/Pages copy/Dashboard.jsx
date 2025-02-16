@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { collection, query, onSnapshot } from 'firebase/firestore';
 import { db, auth } from '../firebase/config';
-import DoctorSidebar from '../Components/DoctorSidebar';
+import Sidebar from '../Components/PatientSidebar';
 import Modal from '../Components/Modal';
 import { 
   RiSearchLine, 
@@ -13,7 +13,7 @@ import {
   RiArrowRightLine
 } from 'react-icons/ri';
 
-function DoctorDashboard() {
+function Dashboard() {
   const [schedules, setSchedules] = useState([]);
   const [loading, setLoading] = useState(true);
   const currentMonth = "October 2024";
@@ -85,7 +85,7 @@ function DoctorDashboard() {
 
   return (
     <div className="flex h-screen bg-gray-50">
-      <DoctorSidebar />
+      <Sidebar />
 
       <div className="flex-1 overflow-auto">
         <div className="p-8">
@@ -271,4 +271,4 @@ function DoctorDashboard() {
   );
 }
 
-export default DoctorDashboard;
+export default Dashboard;
